@@ -25,8 +25,8 @@ public class Csv2kml {
 			String[] element_data = s.split(",");
 			l.add(new Element(element_data));
 		}
-
-
+		//WRITE FUNCTION:
+		kw.KMLWrite(l, outputPath);
 
 	}
 

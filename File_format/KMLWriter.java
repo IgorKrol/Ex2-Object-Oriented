@@ -57,7 +57,8 @@ public class KMLWriter
 					+ "]]></description>");
 			sb.append("<styleUrl>#red</styleUrl>\n");
 			sb.append("<Point>\n");
-			sb.append("<coordinates>"+e.getGeom().toString()+"</coordinates>\n</Point>\r\n" + 
+			String[] coords = e.getGeom().toString().split(",");
+			sb.append("<coordinates>"+coords[1]+","+coords[0]+","+coords[2]+"</coordinates>\n</Point>\r\n" + 
 					"</Placemark>");			
 			
 		}

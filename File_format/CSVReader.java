@@ -11,7 +11,6 @@ import java.util.ArrayList;
 	    {
 	    	ArrayList<String> fileByRows = new ArrayList<String>(); 
 	        String line = "";
-//	        String cvsSplitBy = ",";
 
 	        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) 
 	        {
