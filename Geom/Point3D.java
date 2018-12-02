@@ -237,4 +237,14 @@ public final static int DOWN = 6, UP = 7;
 	/** transform from radians to angles */
 	public static double d2r(double a) { return Math.toRadians(a);}
 	////////////////////////////////////////////////////////////////////////////////
+
+	public void setX(double x) {
+		_x = x;
+	}
+	public void setY(double y) {
+		_y = y;
+	}
+	public void setZ(double z) {
+		_z = z;
+	}
 }

@@ -9,8 +9,6 @@ public class MyCoords implements coords_converter{
 	private final double PI = Math.PI;
 	
 	
-	
-	
 	@Override
 	public Point3D add(Point3D gps, Point3D local_vector_in_meter) {
 																	
@@ -58,7 +56,7 @@ public class MyCoords implements coords_converter{
 		double deltY = (gps1.x() - gps0.x());
 		double deltX = (gps1.y() - gps0.y());
 		double alpha = Math.toDegrees(Math.atan(Math.abs(deltY/deltX)));
-//		double alpha = Math.atan2(Math.abs(deltX),Math.abs(deltY));
+
 		if (deltX>0 && deltY>0) azimuth_elevation_dist_Calc[0] = alpha;
 		if (deltX<0 && deltY>0) azimuth_elevation_dist_Calc[0] = 180 - alpha;
 		if (deltX<0 && deltY<0) azimuth_elevation_dist_Calc[0] = 180 + alpha;

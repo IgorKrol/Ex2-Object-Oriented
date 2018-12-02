@@ -13,9 +13,13 @@ public class Element implements GIS_element {
 		p = new Point3D(a[6]+","+a[7]+","+a[8]);
 	}
 
+//	public Element(MetaData md, Point3D p) {
+//		this.md = md;
+//		this.p = p;
+//	}
+
 	@Override
 	public Geom_element getGeom() {
-
 		return p;
 	}
 
@@ -29,5 +33,15 @@ public class Element implements GIS_element {
 		// TODO Auto-generated method stub
 
 	}
+
+	public String toString(String[] str) {
+		
+		String arrToString = "";
+		for(String string : str) {
+			arrToString += string + ",";
+		}
+		return arrToString;
+	}
+	
 
 }
