@@ -4,6 +4,8 @@ package GUI;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+
 import javax.swing.*;
 
 /**
@@ -88,9 +90,22 @@ public class Map extends JFrame implements MouseListener {
 		// panel (source) fires the MouseEvent.
 		//panel adds "this" object as a MouseEvent listener.
 		_panel.addMouseListener(this);
+		
+		window.addComponentListener(new ComponentAdapter() {
+		    public void componentResized(ComponentEvent componentEvent) {
+		    	
+		    	Image newImage = imgBck.getImage().getScaledInstance(_panel.getWidth(),_panel.getHeight(), Image.SCALE_DEFAULT);
+		    	ImageIcon newIcon = new ImageIcon(newImage);
+		    	labelMap.setIcon(newIcon);
+//		    	_panel.add(labelMap);
+		    	
+		    	// do stuff
+		    }
+		});
 	}
 
 	protected void paintElement() {
+		
 		//	The method getGraphics is called to obtain a Graphics object
 		_paper = _panel.getGraphics();
 		if(pacMan){
@@ -103,7 +118,7 @@ public class Map extends JFrame implements MouseListener {
 		_paper.setFont(new Font("Monospaced", Font.PLAIN, 14));               
 		_paper.drawString("("+Integer.toString(x)+", "+Integer.toString(y)+")",x,y-10);
 	}
-
+	
 	//	public void mouseClicked(MouseEvent event){
 	@Override
 	public void mousePressed(MouseEvent event) {
@@ -119,6 +134,7 @@ public class Map extends JFrame implements MouseListener {
 	
 	public static void main(String[] args) {
 		Map frame = new Map();
+//		frame.setContentPane(new JLabel(new ImageIcon("Ariel1.png")));
 		frame.setBounds(0, 0, 1433, 642);
 		frame.createGui();
 		frame.setVisible(true);
