@@ -16,10 +16,33 @@ public class Pacman extends Figure{
 		this.speed = speed;
 		this.radius = radius;
 	}
-	
+		
+	public double getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+
+	public double getRadius() {
+		return radius;
+	}
+
+	public void setRadius(double radius) {
+		this.radius = radius;
+	}
 
 	public void move(Point3D distanation) {
 		
+	}
+
+	public double getOrientation() {
+		return orientation;
+	}
+
+	public void setOrientation(double orientation) {
+		this.orientation = orientation;
 	}
 	
 	
