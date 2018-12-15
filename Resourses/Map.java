@@ -1,11 +1,19 @@
 package Resourses;
 
+import java.io.File;
+
 import Geom.Point2D;
 import Geom.Point3D;
-
+/**
+ * 
+ * @author Igor_Krol & Amit_Kazado
+ *
+ */
 public class Map{
 	
+
 	private static String mapFilePath = "Ariel1.png";
+	private File mapFile;
 	private Point2D topLeftCorner;
 	private Point2D topRightCorner;
 	private Point2D bottomLeftCorner;
@@ -17,6 +25,7 @@ public class Map{
 		topRightCorner = new Point2D(35.21232, 32.10568);
 		bottomLeftCorner = new Point2D(35.20236, 32.10190);
 		bottomRightCorner = new Point2D(35.21232,32.10190);
+		mapFile = new File(mapFilePath);
 	}
 	/**
 	 * Computes pixel from coords
@@ -66,6 +75,10 @@ public class Map{
 		double angel = p1.angleXY(p2);
 		return new Point2D(distance, angel);
 		
+	}
+	
+	public File getFile() {
+		return mapFile;
 	}
 
 	public static String getMapFilePath() {

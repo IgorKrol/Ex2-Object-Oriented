@@ -12,7 +12,7 @@ import javax.swing.*;
  *
  * 
  */
-public class Map extends JFrame implements MouseListener {
+public class testMap extends JFrame implements MouseListener {
 	//VARIABLES
 	private Container window;
 	private JPanel _panel;
@@ -22,7 +22,7 @@ public class Map extends JFrame implements MouseListener {
 	
 
 	//INITIATOR
-	public Map(){
+	public testMap(){
 		super("Ariel Map"); //setTitle("Map Counter");  // "super" Frame sets its title
 		//	Moves and resizes this component. 
 		//	The new location of the top-left corner is  specified by x and y, 
@@ -133,7 +133,7 @@ public class Map extends JFrame implements MouseListener {
 	public void mouseEntered(MouseEvent event){}
 	
 	public static void main(String[] args) {
-		Map frame = new Map();
+		testMap frame = new testMap();
 //		frame.setContentPane(new JLabel(new ImageIcon("Ariel1.png")));
 		frame.setBounds(0, 0, 1433, 642);
 		frame.createGui();
