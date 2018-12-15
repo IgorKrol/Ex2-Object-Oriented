@@ -8,17 +8,25 @@ import Geom.Point3D;
 public class Path {
 
 	ArrayList<Point3D> pacManPath;
+	double time;
 
 	public Path() {
 		pacManPath = new ArrayList<Point3D>();
+		time = 0;
 	}
-
+	/**
+	 * Initiator with path parameter
+	 * @param p
+	 */
 	public Path(Path p) {
 		Iterator<Point3D> ip = p.iterator();
 		while(ip.hasNext())
 			pacManPath.add(ip.next());
 	}
-
+	/**
+	 * deep copy method
+	 * @return
+	 */
 	public Path copy() {
 		Path newPath = new Path();
 		for (Point3D point3d : pacManPath) {
@@ -43,7 +51,14 @@ public class Path {
 		}
 		return distance;
 	}
-
+	/**
+	 * adds time to current time value
+	 * @param t = time to add
+	 */
+	public void addTime(double t) {
+		time+=t;
+	}
+	
 	public void add(Point3D point) {
 		pacManPath.add(point);
 	}

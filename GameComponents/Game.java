@@ -11,11 +11,56 @@ import Resourses.Map;
 
 public class Game {
 
-	private List<Pacman> pacmans = new ArrayList<Pacman>();
-	private List<Fruit> fruits = new ArrayList<Fruit>();
+	private List<Pacman> pacmans;
+	private List<Fruit> fruits;
+	
+	/**
+	 * Function for game deep copy
+	 * @param g = Game object
+	 * @return deep copied Game object
+	 */
+	public Game Copy(Game g) {
+		Game newGame = new Game();
+		//Copy pacmans to new GAME
+		Iterator<Pacman> pm = g.getPacmans().iterator();
+		Pacman newPacman;
+		while (pm.hasNext()) {
+			newPacman = pm.next();
+			newGame.getPacmans().add(newPacman);
+		}
+		//Copy fruits to new GAME
+		Iterator<Fruit> fru = g.getFruits().iterator();
+		Fruit newFruit;
+		while (fru.hasNext()) {
+			newFruit = fru.next();
+			newGame.getFruits().add(newFruit);
+		}
+		
+		return newGame;
 
+	}
+
+	public List<Pacman> getPacmans(){
+		return pacmans;
+	}
+
+	public List<Fruit> getFruits(){
+		return fruits;
+	}
+
+	public Game() {
+		pacmans = new ArrayList<Pacman>();
+		fruits = new ArrayList<Fruit>();
+	}
+	/**
+	 * Initiating game with csv file path.
+	 * @param csvFile
+	 */
 	public Game (String csvFile) {
-
+		//LIST INIT:
+		pacmans = new ArrayList<Pacman>();
+		fruits = new ArrayList<Fruit>();
+		
 		// read the file and devides it to rows
 		CSVReader cr = new CSVReader();
 		ArrayList<String> rows = cr.CSVRead(csvFile);
@@ -37,7 +82,10 @@ public class Game {
 
 	}
 
-
+	/**
+	 * function adds pacman with String parameter
+	 * @param str String
+	 */
 	void addPacman(String str) {
 
 		String[] fields = str.split(",");
@@ -50,27 +98,35 @@ public class Game {
 		pacmans.add(new Pacman(point, id, speed, radius));
 	}
 
-	
+	/** 
+	 * funtion adds pacman with mouse click
+	 * @param p = pixel point on screen
+	 * @param frameSizePixels = frame current size
+	 */
 	void addPacman(Point2D p, Point2D frameSizePixels) {
-		
+
 		int id = generatePacmanID(pacmans);
 		Map m = new Map();
 		Point3D pCoords = m.PixelToCoords(p, frameSizePixels);
 		pacmans.add(new Pacman(pCoords, id, 1, 1));
-		
-	}
 
+	}
+	/**
+	 * function generates ids for pacmans, USED WHEN adding new pacman
+	 * @param pArr
+	 * @return
+	 */
 	int generatePacmanID(List <Pacman> pArr) {
 
 		int id;
 		int maxID = - 1;
 		Iterator<Pacman> it = pArr.iterator();
 		Figure f;
-		
+
 		if(it.hasNext()) {								// if arr isnt empty, search for max id
 			f = it.next();  
 			maxID = f.getId();
-			
+
 			while(it.hasNext()) {
 				f=it.next();
 				if(f.getId() > maxID) {
@@ -82,7 +138,10 @@ public class Game {
 
 		return id;
 	}
-
+	/**
+	 * Function adds fruits with String parameter
+	 * @param str String
+	 */
 	void addFruit(String str) {
 
 		String[] fields = str.split(",");
@@ -93,27 +152,35 @@ public class Game {
 
 		fruits.add(new Fruit(point, id, weight));
 	}
-
+	/**
+	 * Function adds new fruit with mouse click
+	 * @param p = pixel point in frame
+	 * @param frameSizePixels = frame size
+	 */
 	void addFruit(Point2D p, Point2D frameSizePixels) {
-		
+
 		int id = generateFruitID(fruits);
 		Map m = new Map();
 		Point3D pCoords = m.PixelToCoords(p, frameSizePixels);
 		pacmans.add(new Pacman(pCoords, id, 1, 1));
-		
-	}
 
+	}
+	/**
+	 * Function generates fruit id
+	 * @param fArr
+	 * @return
+	 */
 	int generateFruitID(List <Fruit> fArr) {
 
 		int id;
 		int maxID = - 1;
 		Iterator<Fruit> it = fArr.iterator();
 		Figure f;
-		
+
 		if(it.hasNext()) {								// if arr isnt empty, search for max id
 			f = it.next();  
 			maxID = f.getId();
-			
+
 			while(it.hasNext()) {
 				f=it.next();
 				if(f.getId() > maxID) {
