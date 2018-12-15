@@ -16,14 +16,14 @@ import GameComponents.Path;
  *
  */
 public class ShortestPathAlgo {
-	
+
 
 	private Game game;
 	//matrix for pacmans/fruits. pi = pacman, fi = fruits
 	//PathBoard.lenght = pacmans, PathBoard[0].length = fruits
 	private double PathBoard[][];
-	
-	
+
+
 	public ShortestPathAlgo(Game g) {
 		this.game = g.Copy(g);
 		PathBoard = new double[g.getPacmans().size()][g.getFruits().size()];
@@ -37,7 +37,7 @@ public class ShortestPathAlgo {
 				PathBoard[pi][fi]= timePacmanToFruit(pac, fru);
 			}
 		}//END PATHBOARD CREATION
-		
+
 		for(int i = 0; i < PathBoard[0].length; i++) {
 			int[] minIndex = MatrixMin(PathBoard);
 			double time = PathBoard[minIndex[0]][minIndex[1]];
@@ -93,7 +93,7 @@ public class ShortestPathAlgo {
 
 		return index;
 	}
-	
+
 	/**
 	 * returns time value at given index
 	 * @param i
@@ -103,7 +103,20 @@ public class ShortestPathAlgo {
 	public double getTime(int i,int j) {
 		return PathBoard[i][j];
 	}
-	
+	/**
+	 * recalculate time for specific pacman to eat all fruits
+	 * @param row = pacman row
+	 */
+	public void reCalculatePacmanRow(int row) {
+		Iterator<Fruit> fruIterator = game.getFruits().iterator();
+		Pacman ePac = game.getPacmans().get(row);
+		for(int fi = 0; fruIterator.hasNext(); fi++) {
+			Fruit fru = fruIterator.next();
+			if (PathBoard[row][fi] != 0) {
+				PathBoard[row][fi]= timePacmanToFruit(new Pacman(fru.getCoords(), ePac.getSpeed(), ePac.getRadius()), fru);
+			}
+		}
+	}
 	/**
 	 * This function Adding wasted time to used pacman and removing eaten fruit
 	 * @param minIndex = index of min time in PathBoard
@@ -111,14 +124,17 @@ public class ShortestPathAlgo {
 	private void AddRemoveRowCol(int[] minIndex) {
 		int[] index = minIndex;//index = [i,j]
 		double timeAdd = getTime(index[0], index[1]);
+		//Removing fruit from board by nullifying value.
+		for (int fi = 0; fi<PathBoard.length; fi++) {
+			PathBoard[fi][index[1]]=0;
+		}
+		
+		reCalculatePacmanRow(index[0]);
 		//Adding wasted time to time board
 		for (int pi=0; pi<PathBoard[0].length; pi++) {
 			PathBoard[index[0]][pi]+=timeAdd;
 		}
-		//Removing fruit from board by nullifying value.
-		for (int fi = 0; fi<PathBoard.length; fi++) {
-			PathBoard[fi][index[1]]+=timeAdd;
-		}
+
 
 	}
 

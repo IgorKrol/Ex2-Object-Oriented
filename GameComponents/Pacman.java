@@ -10,12 +10,25 @@ public class Pacman extends Figure{
 	private double speed;
 	private double radius;
 	private double orientation = 0;
-	private Path path = new Path();
+	private Path path;
 	
 	public Pacman(Point3D p, int id, double speed, double radius) {
 		super(p, id);
 		this.speed = speed;
 		this.radius = radius;
+		path = new Path();
+	}
+	/**
+	 * for annonim pacman
+	 * @param p
+	 * @param speed
+	 * @param radius
+	 */
+	public Pacman(Point3D p, double speed, double radius) {
+		super(p);
+		this.speed = speed;
+		this.radius = radius;
+		path = new Path();
 	}
 	
 	public Path getPath() {

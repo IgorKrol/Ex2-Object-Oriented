@@ -14,6 +14,13 @@ public class Figure {
 		coords = p;
 		this.id = id;
 	}
+	/**
+	 * for annonim figure
+	 * @param p
+	 */
+	public Figure(Point3D p) {
+		coords = p;
+	}
 	
 	public Point3D getCoords() {
 		return coords;
