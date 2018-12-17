@@ -4,18 +4,26 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import java.io.File;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import File_format.gameToCSVWriter;
+import GameComponents.Fruit;
 import GameComponents.Game;
+import GameComponents.Pacman;
+import Geom.Point2D;
+import Geom.Point3D;
 import Resourses.Map;
 
-public class MyFrame extends JFrame{
+public class MyFrame extends JFrame implements MouseListener{
 
 	private OpenFile openfileframe;
 	private Game mainGame;
@@ -27,6 +35,11 @@ public class MyFrame extends JFrame{
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
 	private JMenu AddMenu;
+	///////////////////////////////
+	
+	private Point3D mouseClick;
+	private String addFigure;
+	private Graphics paint;
 
 	public MyFrame() {
 		initFrame();
@@ -62,8 +75,6 @@ public class MyFrame extends JFrame{
 		createFileMenu();
 		createAddMenu();
 		this.setJMenuBar(menuBar);
-		System.out.println("add fileMenu and menu bar");
-
 
 	}
 
@@ -73,25 +84,44 @@ public class MyFrame extends JFrame{
 	public void createFileMenu() {
 		JMenuItem open = new JMenuItem("Open File");
 		JMenuItem save = new JMenuItem("Save File");
-//		JTextField jText1 = new JTextField();
+		//		JTextField jText1 = new JTextField();
 
-		
+
 		//OPEN FILE PLATFORM
 		open.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {                                 
-				JFileChooser chooser= new JFileChooser();
+				JFileChooser chooser = new JFileChooser();
 				chooser.setCurrentDirectory(new File("c"));
 				chooser.setFileFilter(new FileNameExtensionFilter("csv","CSV"));
 				int value = chooser.showOpenDialog(null);
 				File f = chooser.getSelectedFile();
 				if (f != null) {
-				String fileName = f.getAbsolutePath();
-				mainGame = new Game(fileName);
+					String fileName = f.getAbsolutePath();
+					mainGame = new Game(fileName);
 				}
 			}
-			
+
 		});
 
+		///////////////////////////////////////////////////////////////////////////////////////
+		//SAVES THE GAME AS A CSV FILE
+		save.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser(new File("c:\\"));
+				fc.setDialogTitle("Save your Game");
+				fc.setFileFilter(new FileNameExtensionFilter(".csv", "CSV File"));
+				int value = fc.showSaveDialog(null);
+				File f = fc.getSelectedFile();
+
+				if(f != null) {
+					String filePath = f.getAbsolutePath();
+					gameToCSVWriter saveGame = new gameToCSVWriter();
+					saveGame.CSVWrite(mainGame.getPacmans(), mainGame.getFruits(), filePath);
+				}
+
+			}
+		});
+		//////////////////////////////////////////////////////////////////////////////////////
 		fileMenu.add(open);
 		fileMenu.add(save);
 		menuBar.add(fileMenu);
@@ -100,10 +130,26 @@ public class MyFrame extends JFrame{
 	/**
 	 * Create Add menu
 	 */
+	
+	///////////////////////////////////////////////////////////
 	public void createAddMenu() {
 		JMenuItem addPacman = new JMenuItem("Add Pacman");
 		JMenuItem addFruit = new JMenuItem("Add Fruit");
 
+		addPacman.addActionListener(new ActionListener() {
+			public void actionPerformed(Action e) {
+				addFigure = "p";
+				// mouseClicked
+			}
+		});
+
+		addFruit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addFigure = "f";
+
+			}
+		});
+		/////////////////////////////////////////////////////////
 		AddMenu.add(addPacman);
 		AddMenu.add(addFruit);
 		menuBar.add(AddMenu);
@@ -142,4 +188,49 @@ public class MyFrame extends JFrame{
 		mainGame.setVisible(true);
 	}
 
+	///////////////////////////////////////////////////////////////////////////
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		mouseClick = new Point3D(e.getX(), e.getY(), 0);
+		paintFigure();
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+
+
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+
+
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
+
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+
+
+	}
+
+	public void paintFigure () {
+		if(addFigure == "p") {
+			mainGame.getPacmans().add(new Pacman(mouseClick, 1, 1));
+			paint.setColor(Color.YELLOW);
+			Point2D p2d = new Point2D(mouseClick.x(), mouseClick.y()); 	// needs new dimension in point2D
+			
+			// needs a map object to convert into pixels and send to paint
+			paint.fillOval(, mouseClick.y(), 20, 20);
+		}
+		else {
+			mainGame.getFruits().add(new Fruit(mouseClick, 1, 1));
+			paint.setColor(Color.RED);
+			paint.fillOval(mouseClick.x(), mouseClick.y(), 20, 20);
+		}
+	}
+	///////////////////////////////////////////////////////////////////////////////////
 }
+
+
