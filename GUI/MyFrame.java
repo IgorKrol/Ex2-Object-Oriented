@@ -23,6 +23,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import GameComponents.Game;
@@ -86,28 +87,23 @@ public class MyFrame extends JFrame{
 	public void createFileMenu() {
 		JMenuItem open = new JMenuItem("Open File");
 		JMenuItem save = new JMenuItem("Save File");
-		JTextArea jTextArea1 = null;
+//		JTextField jText1 = new JTextField();
+
 		
 		//OPEN FILE PLATFORM
 		open.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {                                 
 				JFileChooser chooser= new JFileChooser();
-				chooser.setCurrentDirectory(new File("c:\\temp"));
+				chooser.setCurrentDirectory(new File("c"));
 				chooser.setFileFilter(new FileNameExtensionFilter("csv","CSV"));
 				int value = chooser.showOpenDialog(null);
-				File f= chooser.getSelectedFile();
-				String filename= f.getAbsolutePath();
-
-				try{
-					FileReader reader = new FileReader(filename);
-					BufferedReader br = new BufferedReader(reader);
-					jTextArea1.read(br,null);
-					br.close();
-					jTextArea1.requestFocus();
-				}catch(Exception em){
-					JOptionPane.showMessageDialog(null,e);
+				File f = chooser.getSelectedFile();
+				if (f != null) {
+				String fileName = f.getAbsolutePath();
+				mainGame = new Game(fileName);
 				}
 			}
+			
 		});
 
 		fileMenu.add(open);
