@@ -9,10 +9,12 @@ import GameComponents.Pacman;
 
 public class gameToCSVWriter {
 
-	public void CSVWrite(List<Pacman> pacmans, List<Fruit> fruits, String filePath, String fileName) {
-
+	public void CSVWrite(List<Pacman> pacmans, List<Fruit> fruits, String filePath) {
+		
+		PrintWriter pw = null;
+		
 		try {
-			PrintWriter pw = new PrintWriter(fileName);
+			pw = new PrintWriter(filePath);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
