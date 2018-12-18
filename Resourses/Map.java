@@ -54,11 +54,18 @@ public class Map{
 	 */
 	public Point3D PixelToCoords(Point2D Pixel, Point2D frameSizePixels) {
 		Point2D frameSize = topLeftCorner.difference(bottomRightCorner);
+		//CORDINATES PER PIXEL
 		double pixelX = frameSize.x()/frameSizePixels.x();
 		double pixelY = frameSize.y()/frameSizePixels.y();
-		double difX = Pixel.x()/pixelX;
-		double difY = Pixel.y()/pixelY;
-		return new Point3D(difX + topLeftCorner.x(),difY + topLeftCorner.y());
+		//PIXELS TO CONVERT TO LAT/LON
+		double difX = Pixel.x()*pixelX;
+		double difY = Pixel.y()*pixelY;
+		//ADD TOP LEFT COORDS
+		double xValue = difX + topLeftCorner.x();
+		double yValue = difY + topLeftCorner.y();
+		Point3D returnCoords = new Point3D(xValue,yValue);
+		
+		return returnCoords;
 
 	}
 	/**
