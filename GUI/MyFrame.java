@@ -152,6 +152,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		addFruit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				shouldPaintPacman = false;
+				System.out.println("fruit");
 
 			}
 		});
@@ -172,13 +173,14 @@ public class MyFrame extends JFrame implements MouseListener{
 				
 				while(pac.hasNext()) {
 					Pacman pacman = pac.next();
-					Iterator<Point3D> path = pacman.getPath().iterator();
-					while(path.hasNext()) {
-						Point3D move = path.next();
-						System.out.println(move.toString() + "\n");
-						
-					}
-					System.out.println("ended a path\n");
+//					Iterator<Point3D> path = pacman.getPath().iterator();
+//					while(path.hasNext()) {
+//						Point3D move = path.next();
+//						System.out.println(move.toString() + "\n");
+//						
+//					}
+//					System.out.println("ended a path\n");
+					System.out.println(pacman.getPath());
 				}
 					
 			}
@@ -211,18 +213,22 @@ public class MyFrame extends JFrame implements MouseListener{
 //			System.out.println("Paint");
 			g.drawImage(img, 0, 0, null);
 			Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
-			List <Pacman> pacmansList = mainGame.getPacmans();
+			Iterator<Pacman> pacmanList = mainGame.getPacmans().iterator();
 			g.setColor(Color.YELLOW);
-			for (Pacman pacman : pacmansList) {
+			while(pacmanList.hasNext()) {
+				Pacman pacman = pacmanList.next();
 				Point2D pacPixels = m.CoordsToPixel(pacman.getCoords(), frameSizePixels);
 //				System.out.println("Pac " + pacPixels + " //// Coords:" + pacman.getCoords());
 				g.fillOval((int)pacPixels.x(), (int)pacPixels.y(), 20, 20);
+				
 			}
-			List <Fruit> fruitsList = mainGame.getFruits();
+
+			Iterator<Fruit> fruitList = mainGame.getFruits().iterator();
 			g.setColor(Color.RED);
-			for (Fruit fruit : fruitsList) {
+			while(fruitList.hasNext()) {
+				Fruit fruit = fruitList.next();
 				Point2D fruPixels = m.CoordsToPixel(fruit.getCoords(), frameSizePixels);
-//				System.out.println("Fru " + fruPixels);
+				System.out.println("Fru " + fruPixels);
 				g.fillOval((int)fruPixels.x(), (int)fruPixels.y(), 15, 15);
 			}
 			repaint();
@@ -272,12 +278,13 @@ public class MyFrame extends JFrame implements MouseListener{
 		System.out.println(frameSizePixels);
 		if(shouldPaintPacman) 
 			mainGame.addPacman(mouseClick, frameSizePixels);
-		else 
+		else {
 			mainGame.addFruit(mouseClick, frameSizePixels);
+			System.out.println("fruitttt?");
+		}
 		_panel.repaint();
 		System.out.println(mainGame.getPacmans().toString());
-		Point2D ppp = m.CoordsToPixel(mainGame.getPacmans().get(0).getCoords(), frameSizePixels);
-		System.out.println(ppp);
+
 
 	}
 	///////////////////////////////////////////////////////////////////////////////////

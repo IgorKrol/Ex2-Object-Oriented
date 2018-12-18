@@ -162,7 +162,7 @@ public class Game {
 		int id = generateFruitID(fruits);
 		Map m = new Map();
 		Point3D pCoords = m.PixelToCoords(p, frameSizePixels);
-		pacmans.add(new Pacman(pCoords, id, 1, 1));
+		fruits.add(new Fruit(pCoords, id,1));
 
 	}
 	/**
