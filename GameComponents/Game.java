@@ -86,7 +86,7 @@ public class Game {
 	 * function adds pacman with String parameter
 	 * @param str String
 	 */
-	void addPacman(String str) {
+	public void addPacman(String str) {
 
 		String[] fields = str.split(",");
 
@@ -103,7 +103,7 @@ public class Game {
 	 * @param p = pixel point on screen
 	 * @param frameSizePixels = frame current size
 	 */
-	void addPacman(Point2D p, Point2D frameSizePixels) {
+	public void addPacman(Point2D p, Point2D frameSizePixels) {
 
 		int id = generatePacmanID(pacmans);
 		Map m = new Map();
@@ -142,7 +142,7 @@ public class Game {
 	 * Function adds fruits with String parameter
 	 * @param str String
 	 */
-	void addFruit(String str) {
+	public void addFruit(String str) {
 
 		String[] fields = str.split(",");
 
@@ -157,7 +157,7 @@ public class Game {
 	 * @param p = pixel point in frame
 	 * @param frameSizePixels = frame size
 	 */
-	void addFruit(Point2D p, Point2D frameSizePixels) {
+	public void addFruit(Point2D p, Point2D frameSizePixels) {
 
 		int id = generateFruitID(fruits);
 		Map m = new Map();

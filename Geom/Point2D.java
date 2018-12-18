@@ -25,6 +25,10 @@ public class Point2D implements Geom_element {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	public String toString() {
+		String s = null;
+		s = x-(int)x==0 && y-(int)y==0?(int)x+","+(int)y:x+","+y;
+		return s;
+	}
 	
 }

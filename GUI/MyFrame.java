@@ -25,8 +25,8 @@ import Resourses.Map;
 
 public class MyFrame extends JFrame implements MouseListener{
 
-	private OpenFile openfileframe;
 	private Game mainGame;
+	private Map m;
 	private JPanel _panel;
 	private BufferedImage mapImage;
 	private int mapImageWidth, mapImageHeight;
@@ -37,8 +37,8 @@ public class MyFrame extends JFrame implements MouseListener{
 	private JMenu AddMenu;
 	///////////////////////////////
 	
-	private Point3D mouseClick;
-	private String addFigure;
+	private Point2D mouseClick;
+	private boolean shouldPaintPacman;
 	private Graphics paint;
 
 	public MyFrame() {
@@ -51,7 +51,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		this.setPreferredSize(d);
 		try {
 			//ImageINITIALIZER
-			Map m = new Map();
+			m = new Map();
 			mapFile = m.getFile();
 			mapImage = ImageIO.read(mapFile);
 			mapImageWidth = mapImage.getWidth();
@@ -62,6 +62,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		}
 		createMenu();
 		createPanel();
+		mainGame = new Game();
 
 	}
 	/**
@@ -137,15 +138,15 @@ public class MyFrame extends JFrame implements MouseListener{
 		JMenuItem addFruit = new JMenuItem("Add Fruit");
 
 		addPacman.addActionListener(new ActionListener() {
-			public void actionPerformed(Action e) {
-				addFigure = "p";
+			public void actionPerformed(ActionEvent e) {
+				shouldPaintPacman = true;
 				// mouseClicked
 			}
 		});
 
 		addFruit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addFigure = "f";
+				shouldPaintPacman = false;
 
 			}
 		});
@@ -160,7 +161,7 @@ public class MyFrame extends JFrame implements MouseListener{
 	public void createPanel() {
 		_panel = new JPanelBG();
 		_panel.setLayout(new BorderLayout());
-
+		_panel.addMouseListener(this);
 		this.add(_panel);
 	}
 	/**
@@ -171,27 +172,30 @@ public class MyFrame extends JFrame implements MouseListener{
 	public class JPanelBG extends JPanel{
 		@Override
 		public void paint(Graphics g) {
-			super.paint(g);
+			super.paintComponent(g);
 			int w = _panel.getWidth();
 			int h = _panel.getHeight();
 			Image img = mapImage.getScaledInstance(w, h, Image.SCALE_SMOOTH);
 
 			g.drawImage(img, 0, 0, null);
+			//SHOULD FIX?
+			paint = this.getGraphics();
 		}
 	};
 
 
 	public static void main(String[] args) {
-		MyFrame mainGame = new MyFrame();
-		mainGame.setSize(d);
-		mainGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainGame.setVisible(true);
+		MyFrame mainGameFrame = new MyFrame();
+		mainGameFrame.setSize(d);
+		mainGameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainGameFrame.setVisible(true);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		mouseClick = new Point3D(e.getX(), e.getY(), 0);
+		mouseClick = new Point2D(e.getX(), e.getY());
+		System.out.println(mouseClick.toString());
 		paintFigure();
 	}
 	@Override
@@ -216,18 +220,21 @@ public class MyFrame extends JFrame implements MouseListener{
 	}
 
 	public void paintFigure () {
-		if(addFigure == "p") {
-			mainGame.getPacmans().add(new Pacman(mouseClick, 1, 1));
+		
+		Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
+		System.out.println(frameSizePixels);
+		if(shouldPaintPacman) {
+			mainGame.addPacman(mouseClick, frameSizePixels);
 			paint.setColor(Color.YELLOW);
-			Point2D p2d = new Point2D(mouseClick.x(), mouseClick.y()); 	// needs new dimension in point2D
+//			Point2D p2d = new Point2D(mouseClick.x(), mouseClick.y()); 	// needs new dimension in point2D
 			
 			// needs a map object to convert into pixels and send to paint
-			paint.fillOval(, mouseClick.y(), 20, 20);
+			paint.fillOval((int)mouseClick.x(), (int)mouseClick.y(), 20, 20);
 		}
 		else {
-			mainGame.getFruits().add(new Fruit(mouseClick, 1, 1));
+			mainGame.addFruit(mouseClick, frameSizePixels);
 			paint.setColor(Color.RED);
-			paint.fillOval(mouseClick.x(), mouseClick.y(), 20, 20);
+			paint.fillOval((int)mouseClick.x(), (int)mouseClick.y(), 20, 20);
 		}
 	}
 	///////////////////////////////////////////////////////////////////////////////////
