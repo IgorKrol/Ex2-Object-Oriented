@@ -181,21 +181,21 @@ public class MyFrame extends JFrame implements MouseListener{
 			Image img = mapImage.getScaledInstance(w, h, Image.SCALE_SMOOTH);
 //			System.out.println("Paint");
 			g.drawImage(img, 0, 0, null);
-//			Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
-//			List <Pacman> pacmansList = mainGame.getPacmans();
-//			g.setColor(Color.YELLOW);
-//			for (Pacman pacman : pacmansList) {
-//				Point2D pacPixels = m.CoordsToPixel(pacman.getCoords(), frameSizePixels);
-//				System.out.println("Pac" + pacPixels);
-//				g.fillOval((int)pacPixels.x(), (int)pacPixels.y(), 15, 15);
-//			}
-//			List <Fruit> fruitsList = mainGame.getFruits();
-//			g.setColor(Color.RED);
-//			for (Fruit fruit : fruitsList) {
-//				Point2D fruPixels = m.CoordsToPixel(fruit.getCoords(), frameSizePixels);
-//				System.out.println("Fru" + fruPixels);
-//				g.fillOval((int)fruPixels.x(), (int)fruPixels.y(), 15, 15);
-//			}
+			Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
+			List <Pacman> pacmansList = mainGame.getPacmans();
+			g.setColor(Color.YELLOW);
+			for (Pacman pacman : pacmansList) {
+				Point2D pacPixels = m.CoordsToPixel(pacman.getCoords(), frameSizePixels);
+				System.out.println("Pac" + pacPixels);
+				g.fillOval((int)pacPixels.x(), (int)pacPixels.y(), 15, 15);
+			}
+			List <Fruit> fruitsList = mainGame.getFruits();
+			g.setColor(Color.RED);
+			for (Fruit fruit : fruitsList) {
+				Point2D fruPixels = m.CoordsToPixel(fruit.getCoords(), frameSizePixels);
+				System.out.println("Fru" + fruPixels);
+				g.fillOval((int)fruPixels.x(), (int)fruPixels.y(), 15, 15);
+			}
 //			paint = this.getGraphics();
 		}
 	};

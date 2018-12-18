@@ -37,19 +37,18 @@ public class Map{
 		
 //		PIXELS TO MOVE
 		double difX = coords.x() - topLeftCorner.x();
-		double difY = topLeftCorner.y() - coords.y();
+		double difY = coords.y() - topLeftCorner.y();
 		
 		//CORDINATES PER PIXEL
 		Point2D frameSize = topLeftCorner.difference(bottomRightCorner);
 		double pixelX = frameSize.x()/frameSizePixels.x();
 		double pixelY = frameSize.y()/frameSizePixels.y();
 		
-		return new Point2D(pixelX*difX, pixelY*difY);
-//		int pX = (int)((coords.x() + 180.)*(frameSizePixels.x()/360.));
-//		double latRad = coords.y()*Math.PI/180;
-//		double mercN = Math.log(Math.tan((Math.PI/4)+ latRad/2));
-//		int pY = (int)((frameSizePixels.y()/2)-frameSizePixels.x()*mercN/(2*Math.PI));
-//		return new Point2D(pX,pY);
+		
+		double xP =	difX/pixelX;
+		double yP = difY/pixelY;
+		return new Point2D(Math.round(xP), Math.round(yP));
+
 		
 	}
 	/**
