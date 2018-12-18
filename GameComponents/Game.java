@@ -199,6 +199,7 @@ public class Game {
 	public Iterator<Pacman> iteratorP(){
 		return this.pacmans.iterator();
 	}
+	
 	public Iterator<Fruit> iteratorF(){
 		return this.fruits.iterator();
 	}

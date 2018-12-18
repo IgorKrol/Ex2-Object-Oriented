@@ -9,12 +9,12 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import java.io.File;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 import File_format.gameToCSVWriter;
 import GameComponents.Fruit;
@@ -36,8 +36,6 @@ public class MyFrame extends JFrame implements MouseListener{
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
 	private JMenu AddMenu;
-	///////////////////////////////
-	
 	private Point2D mouseClick;
 	private boolean shouldPaintPacman;
 	private Graphics paint;
@@ -100,12 +98,12 @@ public class MyFrame extends JFrame implements MouseListener{
 				if (f != null) {
 					String fileName = f.getAbsolutePath();
 					mainGame = new Game(fileName);
+					repaint();
 				}
 			}
 
 		});
 
-		///////////////////////////////////////////////////////////////////////////////////////
 		//SAVES THE GAME AS A CSV FILE
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -123,7 +121,7 @@ public class MyFrame extends JFrame implements MouseListener{
 
 			}
 		});
-		//////////////////////////////////////////////////////////////////////////////////////
+
 		fileMenu.add(open);
 		fileMenu.add(save);
 		menuBar.add(fileMenu);
@@ -132,8 +130,8 @@ public class MyFrame extends JFrame implements MouseListener{
 	/**
 	 * Create Add menu
 	 */
-	
-	///////////////////////////////////////////////////////////
+
+
 	public void createAddMenu() {
 		JMenuItem addPacman = new JMenuItem("Add Pacman");
 		JMenuItem addFruit = new JMenuItem("Add Fruit");
@@ -151,7 +149,7 @@ public class MyFrame extends JFrame implements MouseListener{
 
 			}
 		});
-		/////////////////////////////////////////////////////////
+
 		AddMenu.add(addPacman);
 		AddMenu.add(addFruit);
 		menuBar.add(AddMenu);
@@ -192,16 +190,16 @@ public class MyFrame extends JFrame implements MouseListener{
 		mainGameFrame.setVisible(true);
 	}
 
-	///////////////////////////////////////////////////////////////////////////
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		mouseClick = new Point2D(e.getX(), e.getY());
-		System.out.println(mouseClick.toString());
-		paintFigure();
+
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
-
+		mouseClick = new Point2D(e.getX(), e.getY());
+		System.out.println(mouseClick.toString());
+		paintNewFigure();
 
 	}
 	@Override
@@ -219,32 +217,74 @@ public class MyFrame extends JFrame implements MouseListener{
 
 
 	}
-	public void repaint() {
-	super.paint(this.getGraphics());
-//	Iterator<Pacman> pacmans = mainGame.getPacmans().iteratorP();
-//	paint
-	
+	//////////////////////////////////////////////////////////////////////////
+	public void repaint(Game g) {
+		super.paint(this.getGraphics());
+
+		Iterator<Pacman> pacmanIter = g.getPacmans().iterator();
+		Pacman pac;
+		while(pacmanIter.hasNext()) {
+			pac = pacmanIter.next();
+			paintPac(pac);
+		}
+
+		Iterator<Fruit> fruitIter = mainGame.getFruits().iterator();
+		Fruit fru;
+		while(fruitIter.hasNext()) {
+			fru = fruitIter.next();
+			paintFruit(fru);
+		}
 	}
 	
-	public void paintFigure () {
-		
+	public void repaint() {
+		super.paint(this.getGraphics());
+
+		Iterator<Pacman> pacmanIter = mainGame.getPacmans().iterator();
+		Pacman pac;
+		while(pacmanIter.hasNext()) {
+			pac = pacmanIter.next();
+			paintPac(pac);
+		}
+
+		Iterator<Fruit> fruitIter = mainGame.getFruits().iterator();
+		Fruit fru;
+		while(fruitIter.hasNext()) {
+			fru = fruitIter.next();
+			paintFruit(fru);
+		}
+
+	}
+
+	private void paintPac(Pacman p) {
+		paint.setColor(Color.YELLOW);
+		paint.fillOval((int)p.getCoords().x(), (int)p.getCoords().y(), 20, 20);
+	}
+
+	private void paintFruit(Fruit f) {
+		paint.setColor(Color.RED);
+		paint.fillOval((int)f.getCoords().x(), (int)f.getCoords().y(), 10, 10);
+	}
+	/////////////////////////////////////////////////////////////////////////////
+	
+	public void paintNewFigure () {
+
 		Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
 		System.out.println(frameSizePixels);
 		if(shouldPaintPacman) {
 			mainGame.addPacman(mouseClick, frameSizePixels);
 			paint.setColor(Color.YELLOW);
-//			Point2D p2d = new Point2D(mouseClick.x(), mouseClick.y()); 	// needs new dimension in point2D
-			
+			//			Point2D p2d = new Point2D(mouseClick.x(), mouseClick.y()); 	// needs new dimension in point2D
+
 			// needs a map object to convert into pixels and send to paint
 			paint.fillOval((int)mouseClick.x(), (int)mouseClick.y(), 20, 20);
 		}
 		else {
 			mainGame.addFruit(mouseClick, frameSizePixels);
 			paint.setColor(Color.RED);
-			paint.fillOval((int)mouseClick.x(), (int)mouseClick.y(), 20, 20);
+			paint.fillOval((int)mouseClick.x(), (int)mouseClick.y(), 10, 10);
 		}
 	}
-	///////////////////////////////////////////////////////////////////////////////////
+
 }
 
 
