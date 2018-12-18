@@ -64,6 +64,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		createMenu();
 		createPanel();
 		mainGame = new Game();
+		shouldPaintPacman = true;
 
 	}
 	/**
@@ -177,7 +178,7 @@ public class MyFrame extends JFrame implements MouseListener{
 			int w = _panel.getWidth();
 			int h = _panel.getHeight();
 			Image img = mapImage.getScaledInstance(w, h, Image.SCALE_SMOOTH);
-
+			System.out.println("Paint");
 			g.drawImage(img, 0, 0, null);
 			//SHOULD FIX?
 			paint = this.getGraphics();
@@ -232,6 +233,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		System.out.println(frameSizePixels);
 		if(shouldPaintPacman) {
 			mainGame.addPacman(mouseClick, frameSizePixels);
+			System.out.println(mainGame.getPacmans().get(0).toString());
 			paint.setColor(Color.YELLOW);
 //			Point2D p2d = new Point2D(mouseClick.x(), mouseClick.y()); 	// needs new dimension in point2D
 			
@@ -241,7 +243,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		else {
 			mainGame.addFruit(mouseClick, frameSizePixels);
 			paint.setColor(Color.RED);
-			paint.fillOval((int)mouseClick.x(), (int)mouseClick.y(), 20, 20);
+			paint.fillOval((int)mouseClick.x(), (int)mouseClick.y(), 10, 10);
 		}
 	}
 	///////////////////////////////////////////////////////////////////////////////////

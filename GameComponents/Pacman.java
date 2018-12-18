@@ -58,11 +58,16 @@ public class Pacman extends Figure{
 	public double getOrientation() {
 		return orientation;
 	}
-
+	
 	public void setOrientation(double orientation) {
 		this.orientation = orientation;
 	}
 	
+	public String toString() {
+		String s = null;
+		s = this.getCoords().toString() + "   SPEED:" + speed;
+		return s;
+	}
 	
 
 }
