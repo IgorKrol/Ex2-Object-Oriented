@@ -37,7 +37,7 @@ public class Map{
 		
 //		PIXELS TO MOVE
 		double difX = coords.x() - topLeftCorner.x();
-		double difY = coords.y() - topLeftCorner.y();
+		double difY =  topLeftCorner.y() - coords.y();
 		
 		//CORDINATES PER PIXEL
 		Point2D frameSize = topLeftCorner.difference(bottomRightCorner);

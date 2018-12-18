@@ -186,14 +186,14 @@ public class MyFrame extends JFrame implements MouseListener{
 			g.setColor(Color.YELLOW);
 			for (Pacman pacman : pacmansList) {
 				Point2D pacPixels = m.CoordsToPixel(pacman.getCoords(), frameSizePixels);
-				System.out.println("Pac" + pacPixels);
+				System.out.println("Pac " + pacPixels + " //// Coords:" + pacman.getCoords());
 				g.fillOval((int)pacPixels.x(), (int)pacPixels.y(), 15, 15);
 			}
 			List <Fruit> fruitsList = mainGame.getFruits();
 			g.setColor(Color.RED);
 			for (Fruit fruit : fruitsList) {
 				Point2D fruPixels = m.CoordsToPixel(fruit.getCoords(), frameSizePixels);
-				System.out.println("Fru" + fruPixels);
+				System.out.println("Fru " + fruPixels);
 				g.fillOval((int)fruPixels.x(), (int)fruPixels.y(), 15, 15);
 			}
 //			paint = this.getGraphics();
@@ -219,7 +219,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
 		Point3D ppp =m.PixelToCoords(mouseClick, frameSizePixels);
 		System.out.println(mouseClick.toString() + "------>"+ m.CoordsToPixel(new Point3D (ppp.x(),ppp.y()),frameSizePixels));
-//		paintFigure();
+		paintFigure();
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -245,7 +245,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		
 		else 
 			mainGame.addFruit(mouseClick, frameSizePixels);
-//		_panel.repaint();
+		_panel.repaint();
 	}
 	///////////////////////////////////////////////////////////////////////////////////
 }
