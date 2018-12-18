@@ -276,6 +276,8 @@ public class MyFrame extends JFrame implements MouseListener{
 			mainGame.addFruit(mouseClick, frameSizePixels);
 		_panel.repaint();
 		System.out.println(mainGame.getPacmans().toString());
+		Point2D ppp = m.CoordsToPixel(mainGame.getPacmans().get(0).getCoords(), frameSizePixels);
+		System.out.println(ppp);
 
 	}
 	///////////////////////////////////////////////////////////////////////////////////

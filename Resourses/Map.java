@@ -36,8 +36,8 @@ public class Map{
 	public Point2D CoordsToPixel(Point3D coords, Point2D frameSizePixels) {
 		
 //		PIXELS TO MOVE
-		double difX = coords.x() - topLeftCorner.x();
-		double difY =  topLeftCorner.y() - coords.y();
+		double difX = Math.abs(coords.x() - topLeftCorner.x());
+		double difY =  Math.abs(topLeftCorner.y() - coords.y());
 		
 		//CORDINATES PER PIXEL
 		Point2D frameSize = topLeftCorner.difference(bottomRightCorner);
