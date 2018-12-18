@@ -1,5 +1,6 @@
 package GUI;
-
+import java.util.*;
+import java.util.List;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,7 +10,6 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import java.io.File;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -49,10 +49,11 @@ public class MyFrame extends JFrame implements MouseListener{
 	 * Frame initiator: initiate image buffer, menu, panel
 	 */
 	public void initFrame() {
+		m = new Map();
+		mainGame = new Game();
 		this.setPreferredSize(d);
 		try {
 			//ImageINITIALIZER
-			m = new Map();
 			mapFile = m.getFile();
 			mapImage = ImageIO.read(mapFile);
 			mapImageWidth = mapImage.getWidth();
@@ -63,7 +64,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		}
 		createMenu();
 		createPanel();
-		mainGame = new Game();
+	
 		shouldPaintPacman = true;
 
 	}
@@ -178,10 +179,24 @@ public class MyFrame extends JFrame implements MouseListener{
 			int w = _panel.getWidth();
 			int h = _panel.getHeight();
 			Image img = mapImage.getScaledInstance(w, h, Image.SCALE_SMOOTH);
-			System.out.println("Paint");
+//			System.out.println("Paint");
 			g.drawImage(img, 0, 0, null);
-			//SHOULD FIX?
-			paint = this.getGraphics();
+//			Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
+//			List <Pacman> pacmansList = mainGame.getPacmans();
+//			g.setColor(Color.YELLOW);
+//			for (Pacman pacman : pacmansList) {
+//				Point2D pacPixels = m.CoordsToPixel(pacman.getCoords(), frameSizePixels);
+//				System.out.println("Pac" + pacPixels);
+//				g.fillOval((int)pacPixels.x(), (int)pacPixels.y(), 15, 15);
+//			}
+//			List <Fruit> fruitsList = mainGame.getFruits();
+//			g.setColor(Color.RED);
+//			for (Fruit fruit : fruitsList) {
+//				Point2D fruPixels = m.CoordsToPixel(fruit.getCoords(), frameSizePixels);
+//				System.out.println("Fru" + fruPixels);
+//				g.fillOval((int)fruPixels.x(), (int)fruPixels.y(), 15, 15);
+//			}
+//			paint = this.getGraphics();
 		}
 	};
 
@@ -196,14 +211,15 @@ public class MyFrame extends JFrame implements MouseListener{
 	///////////////////////////////////////////////////////////////////////////
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		mouseClick = new Point2D(e.getX(), e.getY());
-		System.out.println(mouseClick.toString());
-		paintFigure();
+	
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
-
-
+		mouseClick = new Point2D(e.getX(), e.getY());
+		Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
+		Point3D ppp =m.PixelToCoords(mouseClick, frameSizePixels);
+		System.out.println(mouseClick.toString() + "------>"+ m.CoordsToPixel(new Point3D (ppp.x(),ppp.y()),frameSizePixels));
+//		paintFigure();
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -220,31 +236,16 @@ public class MyFrame extends JFrame implements MouseListener{
 
 
 	}
-	public void repaint() {
-	super.paint(this.getGraphics());
-//	Iterator<Pacman> pacmans = mainGame.getPacmans().iteratorP();
-//	paint
-	
-	}
-	
+
 	public void paintFigure () {
-		
 		Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
-		System.out.println(frameSizePixels);
-		if(shouldPaintPacman) {
+//		System.out.println(frameSizePixels);
+		if(shouldPaintPacman) 
 			mainGame.addPacman(mouseClick, frameSizePixels);
-			System.out.println(mainGame.getPacmans().get(0).toString());
-			paint.setColor(Color.YELLOW);
-//			Point2D p2d = new Point2D(mouseClick.x(), mouseClick.y()); 	// needs new dimension in point2D
-			
-			// needs a map object to convert into pixels and send to paint
-			paint.fillOval((int)mouseClick.x(), (int)mouseClick.y(), 20, 20);
-		}
-		else {
+		
+		else 
 			mainGame.addFruit(mouseClick, frameSizePixels);
-			paint.setColor(Color.RED);
-			paint.fillOval((int)mouseClick.x(), (int)mouseClick.y(), 10, 10);
-		}
+//		_panel.repaint();
 	}
 	///////////////////////////////////////////////////////////////////////////////////
 }

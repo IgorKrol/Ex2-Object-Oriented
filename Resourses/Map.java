@@ -35,7 +35,7 @@ public class Map{
 	 */
 	public Point2D CoordsToPixel(Point3D coords, Point2D frameSizePixels) {
 		
-		//PIXELS TO MOVE
+//		PIXELS TO MOVE
 		double difX = coords.x() - topLeftCorner.x();
 		double difY = topLeftCorner.y() - coords.y();
 		
@@ -43,8 +43,14 @@ public class Map{
 		Point2D frameSize = topLeftCorner.difference(bottomRightCorner);
 		double pixelX = frameSize.x()/frameSizePixels.x();
 		double pixelY = frameSize.y()/frameSizePixels.y();
+		
 		return new Point2D(pixelX*difX, pixelY*difY);
-
+//		int pX = (int)((coords.x() + 180.)*(frameSizePixels.x()/360.));
+//		double latRad = coords.y()*Math.PI/180;
+//		double mercN = Math.log(Math.tan((Math.PI/4)+ latRad/2));
+//		int pY = (int)((frameSizePixels.y()/2)-frameSizePixels.x()*mercN/(2*Math.PI));
+//		return new Point2D(pX,pY);
+		
 	}
 	/**
 	 * Computes coords from pixel
