@@ -25,7 +25,7 @@ public class ShortestPathAlgo {
 
 
 	public ShortestPathAlgo(Game g) {
-		this.game = g.Copy(g);
+		this.game = g;
 		PathBoard = new double[g.getPacmans().size()][g.getFruits().size()];
 
 		Iterator<Pacman> pacIterator = g.getPacmans().iterator();

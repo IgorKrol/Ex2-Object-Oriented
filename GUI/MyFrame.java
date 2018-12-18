@@ -14,12 +14,13 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.html.HTMLDocument.Iterator;
 
+import Algo.ShortestPathAlgo;
 import File_format.gameToCSVWriter;
 import GameComponents.Fruit;
 import GameComponents.Game;
 import GameComponents.Pacman;
+import GameComponents.Path;
 import Geom.Point2D;
 import Geom.Point3D;
 import Resourses.Map;
@@ -36,11 +37,10 @@ public class MyFrame extends JFrame implements MouseListener{
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
 	private JMenu AddMenu;
-	///////////////////////////////
-	
+	private JMenu AlgoMenu;
 	private Point2D mouseClick;
 	private boolean shouldPaintPacman;
-	private Graphics paint;
+	private ShortestPathAlgo SPA;
 
 	public MyFrame() {
 		initFrame();
@@ -73,11 +73,13 @@ public class MyFrame extends JFrame implements MouseListener{
 	 */
 	public void createMenu() {
 		menuBar = new JMenuBar();
-		fileMenu = new JMenu("FILE");
-		AddMenu = new JMenu("ADD");
+		fileMenu = new JMenu("File");
+		AddMenu = new JMenu("Add");
+		AlgoMenu = new JMenu("Run");
 		fileMenu.setMnemonic(KeyEvent.VK_A);
 		createFileMenu();
 		createAddMenu();
+		createAlgoMenu();
 		this.setJMenuBar(menuBar);
 
 	}
@@ -158,6 +160,33 @@ public class MyFrame extends JFrame implements MouseListener{
 		AddMenu.add(addFruit);
 		menuBar.add(AddMenu);
 	}
+	
+	public void createAlgoMenu() {
+		JMenuItem findShortPath = new JMenuItem("Find Short Path");
+		
+		findShortPath.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SPA = new ShortestPathAlgo(mainGame);
+				Iterator<Pacman> pac = mainGame.getPacmans().iterator();
+				
+				while(pac.hasNext()) {
+					Pacman pacman = pac.next();
+					Iterator<Point3D> path = pacman.getPath().iterator();
+					while(path.hasNext()) {
+						Point3D move = path.next();
+						System.out.println(move.toString() + "\n");
+						
+					}
+					System.out.println("ended a path\n");
+				}
+					
+			}
+		});
+		
+		AlgoMenu.add(findShortPath);
+		menuBar.add(AlgoMenu);
+	}
 	/**
 	 * Create Main Panel with map image on it
 	 */
@@ -186,17 +215,17 @@ public class MyFrame extends JFrame implements MouseListener{
 			g.setColor(Color.YELLOW);
 			for (Pacman pacman : pacmansList) {
 				Point2D pacPixels = m.CoordsToPixel(pacman.getCoords(), frameSizePixels);
-				System.out.println("Pac " + pacPixels + " //// Coords:" + pacman.getCoords());
-				g.fillOval((int)pacPixels.x(), (int)pacPixels.y(), 15, 15);
+//				System.out.println("Pac " + pacPixels + " //// Coords:" + pacman.getCoords());
+				g.fillOval((int)pacPixels.x(), (int)pacPixels.y(), 20, 20);
 			}
 			List <Fruit> fruitsList = mainGame.getFruits();
 			g.setColor(Color.RED);
 			for (Fruit fruit : fruitsList) {
 				Point2D fruPixels = m.CoordsToPixel(fruit.getCoords(), frameSizePixels);
-				System.out.println("Fru " + fruPixels);
+//				System.out.println("Fru " + fruPixels);
 				g.fillOval((int)fruPixels.x(), (int)fruPixels.y(), 15, 15);
 			}
-//			paint = this.getGraphics();
+			repaint();
 		}
 	};
 
@@ -216,9 +245,10 @@ public class MyFrame extends JFrame implements MouseListener{
 	@Override
 	public void mousePressed(MouseEvent e) {
 		mouseClick = new Point2D(e.getX(), e.getY());
-		Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
-		Point3D ppp =m.PixelToCoords(mouseClick, frameSizePixels);
-		System.out.println(mouseClick.toString() + "------>"+ m.CoordsToPixel(new Point3D (ppp.x(),ppp.y()),frameSizePixels));
+		System.out.println(mouseClick);
+//		Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
+//		Point3D ppp =m.PixelToCoords(mouseClick, frameSizePixels);
+//		System.out.println(mouseClick.toString() + "------>"+ m.CoordsToPixel(new Point3D (ppp.x(),ppp.y()),frameSizePixels));
 		paintFigure();
 	}
 	@Override
@@ -239,13 +269,14 @@ public class MyFrame extends JFrame implements MouseListener{
 
 	public void paintFigure () {
 		Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
-//		System.out.println(frameSizePixels);
+		System.out.println(frameSizePixels);
 		if(shouldPaintPacman) 
 			mainGame.addPacman(mouseClick, frameSizePixels);
-		
 		else 
 			mainGame.addFruit(mouseClick, frameSizePixels);
 		_panel.repaint();
+		System.out.println(mainGame.getPacmans().toString());
+
 	}
 	///////////////////////////////////////////////////////////////////////////////////
 }
