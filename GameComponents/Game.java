@@ -192,4 +192,14 @@ public class Game {
 
 		return id;
 	}
+	/**
+	 * pacman iterator
+	 * @return
+	 */
+	public Iterator<Pacman> iteratorP(){
+		return this.pacmans.iterator();
+	}
+	public Iterator<Fruit> iteratorF(){
+		return this.fruits.iterator();
+	}
 }

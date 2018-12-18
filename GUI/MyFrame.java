@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 import File_format.gameToCSVWriter;
 import GameComponents.Fruit;
@@ -218,7 +219,13 @@ public class MyFrame extends JFrame implements MouseListener{
 
 
 	}
-
+	public void repaint() {
+	super.paint(this.getGraphics());
+//	Iterator<Pacman> pacmans = mainGame.getPacmans().iteratorP();
+//	paint
+	
+	}
+	
 	public void paintFigure () {
 		
 		Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
