@@ -91,7 +91,7 @@ public class Game {
 		String[] fields = str.split(",");
 
 		int id = Integer.parseInt(fields[1]);
-		Point3D point = new Point3D(Double.parseDouble(fields[2]), Double.parseDouble(fields[3]));
+		Point3D point = new Point3D(Double.parseDouble(fields[3]), Double.parseDouble(fields[2]));
 		double speed = Double.parseDouble(fields[4]); 
 		double radius = Double.parseDouble(fields[5]); 
 
@@ -147,7 +147,7 @@ public class Game {
 		String[] fields = str.split(",");
 
 		int id = Integer.parseInt(fields[1]);
-		Point3D point = new Point3D(Double.parseDouble(fields[2]), Double.parseDouble(fields[3]));
+		Point3D point = new Point3D(Double.parseDouble(fields[3]), Double.parseDouble(fields[2]));
 		int weight = Integer.parseInt(fields[4]); 
 
 		fruits.add(new Fruit(point, id, weight));

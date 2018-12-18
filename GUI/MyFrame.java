@@ -219,7 +219,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
 		Point3D ppp =m.PixelToCoords(mouseClick, frameSizePixels);
 		System.out.println(mouseClick.toString() + "------>"+ m.CoordsToPixel(new Point3D (ppp.x(),ppp.y()),frameSizePixels));
-//		paintFigure();
+		paintFigure();
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -245,7 +245,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		
 		else 
 			mainGame.addFruit(mouseClick, frameSizePixels);
-//		_panel.repaint();
+		_panel.repaint();
 	}
 	///////////////////////////////////////////////////////////////////////////////////
 }
