@@ -8,10 +8,12 @@ import Geom.Point3D;
 public class Path {
 
 	ArrayList<Point3D> pacManPath;
+	ArrayList<Double> timePerFruitEatten;
 	double time;
 
 	public Path() {
 		pacManPath = new ArrayList<Point3D>();
+		timePerFruitEatten = new ArrayList<Double>();
 		time = 0;
 	}
 	/**
@@ -65,10 +67,16 @@ public class Path {
 	
 	public void add(Point3D point) {
 		pacManPath.add(point);
+		timePerFruitEatten.add(time);
 	}
-
+	public ArrayList<Double> getTimesForEachFruit(){
+		return timePerFruitEatten;
+	}
 	public Iterator<Point3D> iterator(){
 		return pacManPath.iterator();
+	}
+	public ArrayList<Point3D> getPathPoints(){
+		return pacManPath;
 	}
 	/**
 	 * toString method
