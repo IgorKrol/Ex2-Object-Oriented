@@ -46,17 +46,21 @@ public class Path2KML {
 					+ "Speed: <b>"+ singlePacman.getSpeed() +"</b>"
 					+ "<br/>Radius <b>"+ singlePacman.getRadius()+"</b>"
 					+ "]]></description>");
-			sb.append("<styleUrl>#red</styleUrl>\n");
+			String color = i==0?"#yellow":"red";
+			sb.append("<styleUrl>"+color+"</styleUrl>\n");
 			sb.append("<TimeStamp>\r\n" + 
 					"        <when>" + (singlePath.getTimesForEachFruit().get(i))*1000 + "</when>\r\n" + 
 					"      </TimeStamp>");
 			sb.append("<Point>\n");
 			String[] coords = singlePath.getPathPoints().get(i).toString().split(",");
-			sb.append("<coordinates>"+coords[1]+","+coords[0]+","+coords[2]+"</coordinates>\n</Point>\r\n" + 
+			sb.append("<coordinates>"+coords[0]+","+coords[1]+","+coords[2]+"</coordinates>\n</Point>\r\n" + 
 					"</Placemark>");	
 			
 			}
 		}
+		sb.append("</Folder>\r\n" + "</Document></kml>");
+		pw.write(sb.toString());
+		pw.close();
 		
 	}
 	
