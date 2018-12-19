@@ -11,7 +11,7 @@ import GameComponents.Pacman;
 import GameComponents.Path;
 
 /**
- * This class responsible for Shortest path calculation for given game.
+ * This class responsible for finding the Shortest path calculation for a given game.
  * @author Igor_Krol & Amit_Kazado
  *
  */
@@ -20,7 +20,7 @@ public class ShortestPathAlgo {
 
 	private Game game;
 	//matrix for pacmans/fruits. pi = pacman, fi = fruits
-	//PathBoard.lenght = pacmans, PathBoard[0].length = fruits
+	//PathBoard.length = pacmans, PathBoard[0].length = fruits
 	private double PathBoard[][];
 
 
@@ -54,8 +54,8 @@ public class ShortestPathAlgo {
 		for(int i = 0; i < PathBoard[0].length; i++) {
 			int[] minIndex = MatrixMin(PathBoard);
 			double time = PathBoard[minIndex[0]][minIndex[1]];
-			Pacman eP = game.getPacmans().get(minIndex[0]);
-			Fruit eF = game.getFruits().get(minIndex[1]);
+			Pacman eP = game.getPacmans().get(minIndex[0]);			// check this, maybe add -1
+			Fruit eF = game.getFruits().get(minIndex[1]);			// same
 			eP.getPath().add(eF.getCoords());
 			eP.getPath().addTime(time);
 			AddRemoveRowCol(minIndex);
@@ -132,7 +132,7 @@ public class ShortestPathAlgo {
 				game.getPacmans().get(index[0]).getRadius());
 		Iterator<Fruit> eFru = game.getFruits().iterator();
 		for(int fi = 0; fi < PathBoard[0].length; fi++) {
-			Pacman c;
+			Pacman c;				// ?????
 			if (PathBoard[index[0]][fi] != 0) {
 				Fruit ff;
 				PathBoard[index[0]][fi]= timePacmanToFruit(ePac, ff = eFru.next()) + time;
@@ -145,7 +145,7 @@ public class ShortestPathAlgo {
 	 * @param minIndex = index of min time in PathBoard
 	 */
 	private void AddRemoveRowCol(int[] minIndex) {
-		int[] index = minIndex;//index = [i,j]
+		int[] index = minIndex;//index = [i,j]			// why? useless, points to the same adress
 		double timeAdd = getTime(index[0], index[1]);
 
 		reCalculatePacmanRow(minIndex,timeAdd);
