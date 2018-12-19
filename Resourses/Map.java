@@ -21,6 +21,11 @@ public class Map{
 	
 	//initiator
 	public Map() {
+		
+//		ClassLoader classLoader = getClass().getClassLoader();
+		 String workingDir = System.getProperty("user.dir");
+		   System.out.println("Current working directory : " + workingDir);
+		   
 		topLeftCorner = new Point2D(35.20236, 32.10568);
 		topRightCorner = new Point2D(35.21232, 32.10568);
 		bottomLeftCorner = new Point2D(35.20236, 32.10190);

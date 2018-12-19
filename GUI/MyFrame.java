@@ -167,6 +167,8 @@ public class MyFrame extends JFrame implements MouseListener{
 
 	public void createAlgoMenu() {
 		JMenuItem findShortPath = new JMenuItem("Find Short Path");
+		JMenuItem playGame = new JMenuItem("Play Game");
+		JMenuItem reset = new JMenuItem("Reset");
 
 		findShortPath.addActionListener(new ActionListener() {
 			@Override
@@ -176,8 +178,29 @@ public class MyFrame extends JFrame implements MouseListener{
 
 			}
 		});
-
+		
+		
+		playGame.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		reset.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainGame = new Game();
+			}
+		});
+		
+		
 		AlgoMenu.add(findShortPath);
+		AlgoMenu.add(playGame);
+		AlgoMenu.add(reset);
 		menuBar.add(AlgoMenu);
 	}
 	/**
