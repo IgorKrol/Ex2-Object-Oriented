@@ -32,7 +32,7 @@ public class gameToCSVWriter {
 		Iterator<Fruit> Fit = fruits.iterator();
 		while(Fit.hasNext()) {
 			Fruit f = Fit.next();
-			sb.append("F" + f.getId() + "," + f.getCoords().x() + "," + f.getCoords().y() + "," + f.getCoords().z() + ","
+			sb.append("F" + "," + f.getId() + "," + f.getCoords().x() + "," + f.getCoords().y() + "," + f.getCoords().z() + ","
 					+ f.getWeight() + "\n");
 		}
 		
