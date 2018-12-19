@@ -54,8 +54,8 @@ public class ShortestPathAlgo {
 		for(int i = 0; i < PathBoard[0].length; i++) {
 			int[] minIndex = MatrixMin(PathBoard);
 			double time = PathBoard[minIndex[0]][minIndex[1]];
-			Pacman eP = game.getPacmans().get(minIndex[0]);			// check this, maybe add -1
-			Fruit eF = game.getFruits().get(minIndex[1]);			// same
+			Pacman eP = game.getPacmans().get(minIndex[0]);			
+			Fruit eF = game.getFruits().get(minIndex[1]);			
 			eP.getPath().add(eF.getCoords());
 			eP.getPath().addTime(time);
 			AddRemoveRowCol(minIndex);
@@ -132,10 +132,10 @@ public class ShortestPathAlgo {
 				game.getPacmans().get(index[0]).getRadius());
 		Iterator<Fruit> eFru = game.getFruits().iterator();
 		for(int fi = 0; fi < PathBoard[0].length; fi++) {
-			Pacman c;				// ?????
+			Pacman c;
+			Fruit ff = eFru.next();
 			if (PathBoard[index[0]][fi] != 0) {
-				Fruit ff;
-				PathBoard[index[0]][fi]= timePacmanToFruit(ePac, ff = eFru.next()) + time;
+				PathBoard[index[0]][fi]= timePacmanToFruit(ePac, ff) + time;
 				System.out.println("DIS:" + timePacmanToFruit(ePac, ff) + "/// TIME: " + time);
 			}
 		}
