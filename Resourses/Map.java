@@ -12,7 +12,7 @@ import Geom.Point3D;
 public class Map{
 	
 
-	private static String mapFilePath = "Ariel1.png";
+	private static String mapFilePath = "\\src\\Resourses\\Ariel1.png";
 	private File mapFile;
 	private Point2D topLeftCorner;
 	private Point2D topRightCorner;
@@ -24,13 +24,13 @@ public class Map{
 		
 //		ClassLoader classLoader = getClass().getClassLoader();
 		 String workingDir = System.getProperty("user.dir");
-		   System.out.println("Current working directory : " + workingDir);
+//		   System.out.println("Current working directory : " + workingDir + mapFilePath);
 		   
 		topLeftCorner = new Point2D(35.20236, 32.10568);
 		topRightCorner = new Point2D(35.21232, 32.10568);
 		bottomLeftCorner = new Point2D(35.20236, 32.10190);
 		bottomRightCorner = new Point2D(35.21232,32.10190);
-		mapFile = new File(mapFilePath);
+		mapFile = new File((workingDir + mapFilePath));
 	}
 	/**
 	 * Computes pixel from coords
