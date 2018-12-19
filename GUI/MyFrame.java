@@ -223,16 +223,20 @@ public class MyFrame extends JFrame implements MouseListener{
 				g.fillOval((int)fruPixels.x(), (int)fruPixels.y(), 15, 15);
 			}
 			if(shouldDrawLines) paintLines(g);
+			else {
 			repaint();
+			}
+			
 		}
 		public void paintLines(Graphics g) {
-
+			repaint();
 			Iterator<Pacman> pIte = mainGame.getPacmans().iterator();
 			while(pIte.hasNext()) {
 				Pacman singlePacPath = pIte.next();
 				Iterator<Point3D> cPoint = singlePacPath.getPath().iterator();
 				Point2D pPoint = null;
 				if(cPoint.hasNext()) pPoint = m.CoordsToPixel(cPoint.next(), frameSizePixels);
+				g.setColor(Color.BLUE);
 				while(cPoint.hasNext()) {
 					Point2D startPoint = pPoint;
 					pPoint = m.CoordsToPixel(cPoint.next(), frameSizePixels);
