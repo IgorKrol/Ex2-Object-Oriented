@@ -27,13 +27,14 @@ import Geom.Point3D;
 import Resourses.Map;
 
 public class MyFrame extends JFrame implements MouseListener{
-
+	
+	private boolean shouldDrawFigures;
 	private Game mainGame;
 	private Map m;
 	private JPanel _panel;
 	private BufferedImage mapImage;
 	private File mapFile;
-	private static Dimension d = new Dimension(400, 250);
+	private static Dimension d = new Dimension(1400, 600);
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
 	private JMenu AddMenu;
@@ -52,6 +53,7 @@ public class MyFrame extends JFrame implements MouseListener{
 	 */
 	public void initFrame() {
 		m = new Map();
+		shouldDrawFigures = false;
 		shouldDrawLines = false;
 		mainGame = new Game();
 		this.setPreferredSize(d);
@@ -123,6 +125,7 @@ public class MyFrame extends JFrame implements MouseListener{
 					String fileName = f.getAbsolutePath();
 					mainGame = new Game(fileName);
 				}
+				shouldDrawFigures = true;
 			}
 
 		});
@@ -232,15 +235,26 @@ public class MyFrame extends JFrame implements MouseListener{
 	 *
 	 */
 	public class JPanelBG extends JPanel{
+		int w;
+		int h;
 		@Override
 		public void paint(Graphics g) {
 			super.paintComponent(g);
-			int w = MyFrame.this.getWidth();
-			int h = MyFrame.this.getHeight();
+			w = MyFrame.this.getWidth();
+			h = MyFrame.this.getHeight();
 			frameSizePixels = new Point2D(w, h);
 
 			Image img = mapImage.getScaledInstance(w, h, Image.SCALE_SMOOTH);
 			g.drawImage(img, 0, 0, null);
+			
+			if(shouldDrawFigures) paintFigure(g);
+			if(shouldDrawLines) paintLines(g);
+			else {
+			repaint();
+			}
+			
+		}
+		public void paintFigure(Graphics g) {
 			Point2D frameSizePixels = new Point2D(w,h);
 			Iterator<Pacman> pacmanList = mainGame.getPacmans().iterator();
 			g.setColor(Color.YELLOW);
@@ -258,11 +272,6 @@ public class MyFrame extends JFrame implements MouseListener{
 				Point2D fruPixels = m.CoordsToPixel(fruit.getCoords(), frameSizePixels);
 				g.fillOval((int)fruPixels.x()-7, (int)fruPixels.y()-7, 14, 14);
 			}
-			if(shouldDrawLines) paintLines(g);
-			else {
-			repaint();
-			}
-			
 		}
 		public void paintLines(Graphics g) {
 			repaint();
@@ -325,6 +334,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		else {
 			mainGame.addFruit(mouseClick, frameSizePixels);
 		}
+		shouldDrawFigures = true;
 		_panel.repaint();
 
 
