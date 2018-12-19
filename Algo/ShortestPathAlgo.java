@@ -28,12 +28,6 @@ public class ShortestPathAlgo {
 		this.game = g;
 		PathBoard = new double[g.getPacmans().size()][g.getFruits().size()];
 		
-		for (Pacman PPP : g.getPacmans()) {
-			System.out.println(PPP);
-		}
-			for (Fruit fff : g.getFruits()) {
-				System.out.println(fff);
-		}
 		
 		
 		Iterator<Pacman> pacIterator = g.getPacmans().iterator();
@@ -46,10 +40,6 @@ public class ShortestPathAlgo {
 			}
 		}//END PATHBOARD CREATION
 		
-		for (int k = 0; k < PathBoard.length; k++) {
-			for(int l=0;l<PathBoard[0].length; l++)
-				System.out.print((int)PathBoard[k][l]+",");
-			System.out.println();}
 		
 		for(int i = 0; i < PathBoard[0].length; i++) {
 			int[] minIndex = MatrixMin(PathBoard);
@@ -59,11 +49,6 @@ public class ShortestPathAlgo {
 			eP.getPath().add(eF.getCoords());
 			eP.getPath().addTime(time);
 			AddRemoveRowCol(minIndex);
-						System.out.println(eP.getPath() +":"+ eP.getPath().getTime());
-			for (int k = 0; k < PathBoard.length; k++) {
-				for(int l=0;l<PathBoard[0].length; l++)
-					System.out.print((int)PathBoard[k][l]+",");
-				System.out.println();}
 		}
 	}
 	/**
@@ -136,7 +121,6 @@ public class ShortestPathAlgo {
 			Fruit ff = eFru.next();
 			if (PathBoard[index[0]][fi] != 0) {
 				PathBoard[index[0]][fi]= timePacmanToFruit(ePac, ff) + time;
-				System.out.println("DIS:" + timePacmanToFruit(ePac, ff) + "/// TIME: " + time);
 			}
 		}
 	}

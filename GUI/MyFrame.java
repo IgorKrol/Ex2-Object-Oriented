@@ -155,7 +155,6 @@ public class MyFrame extends JFrame implements MouseListener{
 		addFruit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				shouldPaintPacman = false;
-				//				System.out.println("fruit");
 
 			}
 		});
@@ -226,7 +225,6 @@ public class MyFrame extends JFrame implements MouseListener{
 			frameSizePixels = new Point2D(w, h);
 
 			Image img = mapImage.getScaledInstance(w, h, Image.SCALE_SMOOTH);
-			//			System.out.println("Paint");
 			g.drawImage(img, 0, 0, null);
 			Point2D frameSizePixels = new Point2D(w,h);
 			Iterator<Pacman> pacmanList = mainGame.getPacmans().iterator();
@@ -285,10 +283,6 @@ public class MyFrame extends JFrame implements MouseListener{
 	@Override
 	public void mousePressed(MouseEvent e) {
 		mouseClick = new Point2D(e.getX(), e.getY());
-		//		System.out.println(mouseClick);
-		//		Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
-		//		Point3D ppp =m.PixelToCoords(mouseClick, frameSizePixels);
-		//		System.out.println(mouseClick.toString() + "------>"+ m.CoordsToPixel(new Point3D (ppp.x(),ppp.y()),frameSizePixels));
 		paintFigure();
 	}
 	@Override
@@ -308,16 +302,12 @@ public class MyFrame extends JFrame implements MouseListener{
 	}
 
 	public void paintFigure () {
-		//		Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
-		//		System.out.println(frameSizePixels);
 		if(shouldPaintPacman) 
 			mainGame.addPacman(mouseClick, frameSizePixels);
 		else {
 			mainGame.addFruit(mouseClick, frameSizePixels);
-			//			System.out.println("fruitttt?");
 		}
 		_panel.repaint();
-		//		System.out.println(mainGame.getPacmans().toString());
 
 
 	}
