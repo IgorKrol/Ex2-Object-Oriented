@@ -41,6 +41,7 @@ public class MyFrame extends JFrame implements MouseListener{
 	private Point2D mouseClick;
 	private boolean shouldPaintPacman;
 	private ShortestPathAlgo SPA;
+	private Point2D frameSizePixels;
 	private boolean shouldDrawLines;
 
 	public MyFrame() {
@@ -199,6 +200,8 @@ public class MyFrame extends JFrame implements MouseListener{
 			super.paintComponent(g);
 			int w = MyFrame.this.getWidth();
 			int h = MyFrame.this.getHeight();
+			frameSizePixels = new Point2D(w, h);
+
 			Image img = mapImage.getScaledInstance(w, h, Image.SCALE_SMOOTH);
 			//			System.out.println("Paint");
 			g.drawImage(img, 0, 0, null);
@@ -223,7 +226,6 @@ public class MyFrame extends JFrame implements MouseListener{
 			repaint();
 		}
 		public void paintLines(Graphics g) {
-			Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
 
 			Iterator<Pacman> pIte = mainGame.getPacmans().iterator();
 			while(pIte.hasNext()) {
@@ -279,7 +281,7 @@ public class MyFrame extends JFrame implements MouseListener{
 	}
 
 	public void paintFigure () {
-		Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
+		//		Point2D frameSizePixels = new Point2D(getWidth(), getHeight());
 		//		System.out.println(frameSizePixels);
 		if(shouldPaintPacman) 
 			mainGame.addPacman(mouseClick, frameSizePixels);

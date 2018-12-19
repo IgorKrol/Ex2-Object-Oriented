@@ -67,7 +67,7 @@ public class Pacman extends Figure{
 	
 	public String toString() {
 		String s = null;
-		s = this.getCoords().toString() + "   SPEED:" + speed;
+		s = "P:" + this.getCoords().toString() + "   SPEED:" + speed;
 		return s;
 	}
 	

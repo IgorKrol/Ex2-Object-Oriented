@@ -19,7 +19,9 @@ public class Fruit extends Figure {
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
-
+	public String toString() {
+		return "F:" + getCoords().toString();
+	}
 	
 
 

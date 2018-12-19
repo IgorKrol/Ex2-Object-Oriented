@@ -92,8 +92,8 @@ public class Game {
 
 		int id = Integer.parseInt(fields[1]);
 		Point3D point = new Point3D(Double.parseDouble(fields[3]), Double.parseDouble(fields[2]));
-		double speed = Double.parseDouble(fields[4]); 
-		double radius = Double.parseDouble(fields[5]); 
+		double speed = Double.parseDouble(fields[5]); 
+		double radius = Double.parseDouble(fields[6]); 
 
 		pacmans.add(new Pacman(point, id, speed, radius));
 	}
