@@ -46,6 +46,11 @@ public class ShortestPathAlgo {
 			eP.getPath().add(eF.getCoords());
 			eP.getPath().addTime(time);
 			AddRemoveRowCol(minIndex);
+			//			System.out.println(eP.getPath() +":"+ eP.getPath().getTime());
+			for (int k = 0; k < PathBoard.length; k++) {
+				for(int l=0;l<PathBoard[0].length; l++)
+					System.out.print(PathBoard[k][l]+",");
+				System.out.println();}
 		}
 	}
 	/**
@@ -78,7 +83,7 @@ public class ShortestPathAlgo {
 	 */
 	private int[] MatrixMin(double[][] mat) {
 		int i=0,j=0;
-		double min = -1;
+		double min = Double.MAX_VALUE;
 		int[] index = new int[2];
 		for(i=0; i<mat.length; i++) {
 			for (j=0; j<mat[0].length; j++) {
@@ -124,17 +129,18 @@ public class ShortestPathAlgo {
 	private void AddRemoveRowCol(int[] minIndex) {
 		int[] index = minIndex;//index = [i,j]
 		double timeAdd = getTime(index[0], index[1]);
+
+
+		reCalculatePacmanRow(index[0]);
+		//Adding wasted time to time board
+		for (int pi=0; pi<PathBoard[0].length; pi++) {
+			if (PathBoard[index[0]][pi] != 0)
+				PathBoard[index[0]][pi]+=timeAdd;
+		}
 		//Removing fruit from board by nullifying value.
 		for (int fi = 0; fi<PathBoard.length; fi++) {
 			PathBoard[fi][index[1]]=0;
 		}
-		
-		reCalculatePacmanRow(index[0]);
-		//Adding wasted time to time board
-		for (int pi=0; pi<PathBoard[0].length; pi++) {
-			PathBoard[index[0]][pi]+=timeAdd;
-		}
-
 
 	}
 

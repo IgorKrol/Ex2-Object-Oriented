@@ -17,6 +17,7 @@ public class Pacman extends Figure{
 		this.speed = speed;
 		this.radius = radius;
 		path = new Path();
+		path.add(p);
 	}
 	/**
 	 * for annonim pacman
@@ -29,6 +30,7 @@ public class Pacman extends Figure{
 		this.speed = speed;
 		this.radius = radius;
 		path = new Path();
+		path.add(p);
 	}
 	
 	public Path getPath() {

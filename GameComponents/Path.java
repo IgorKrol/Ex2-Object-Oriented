@@ -59,6 +59,10 @@ public class Path {
 		time+=t;
 	}
 	
+	public double getTime() {
+		return time;
+	}
+	
 	public void add(Point3D point) {
 		pacManPath.add(point);
 	}
