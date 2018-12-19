@@ -211,7 +211,7 @@ public class MyFrame extends JFrame implements MouseListener{
 			while(pacmanList.hasNext()) {
 				Pacman pacman = pacmanList.next();
 				Point2D pacPixels = m.CoordsToPixel(pacman.getCoords(), frameSizePixels);
-				g.fillOval((int)pacPixels.x(), (int)pacPixels.y(), 20, 20);
+				g.fillOval((int)pacPixels.x()-10, (int)pacPixels.y()-10, 20, 20);
 
 			}
 
@@ -220,7 +220,7 @@ public class MyFrame extends JFrame implements MouseListener{
 			while(fruitList.hasNext()) {
 				Fruit fruit = fruitList.next();
 				Point2D fruPixels = m.CoordsToPixel(fruit.getCoords(), frameSizePixels);
-				g.fillOval((int)fruPixels.x(), (int)fruPixels.y(), 15, 15);
+				g.fillOval((int)fruPixels.x()-7, (int)fruPixels.y()-7, 14, 14);
 			}
 			if(shouldDrawLines) paintLines(g);
 			else {

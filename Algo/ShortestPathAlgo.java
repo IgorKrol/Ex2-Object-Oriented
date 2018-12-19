@@ -133,9 +133,9 @@ public class ShortestPathAlgo {
 		Iterator<Fruit> eFru = game.getFruits().iterator();
 		for(int fi = 0; fi < PathBoard[0].length; fi++) {
 			Pacman c;
+			Fruit ff = eFru.next();
 			if (PathBoard[index[0]][fi] != 0) {
-				Fruit ff;
-				PathBoard[index[0]][fi]= timePacmanToFruit(ePac, ff = eFru.next()) + time;
+				PathBoard[index[0]][fi]= timePacmanToFruit(ePac, ff) + time;
 				System.out.println("DIS:" + timePacmanToFruit(ePac, ff) + "/// TIME: " + time);
 			}
 		}
