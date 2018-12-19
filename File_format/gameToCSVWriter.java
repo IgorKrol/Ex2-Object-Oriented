@@ -25,14 +25,14 @@ public class gameToCSVWriter {
 		sb.append("Type,Id,Lat,Lon,Alt,Speed/Weight,Radius\n");
 		while(Pit.hasNext()) {							
 			Pacman p = Pit.next();
-			sb.append("P," + p.getId() + "," + p.getCoords().x() + "," + p.getCoords().y() + "," + p.getCoords().z() + "," 
+			sb.append("P," + p.getId() + "," + p.getCoords().y() + "," + p.getCoords().x() + "," + p.getCoords().z() + "," 
 					+ p.getSpeed() + "," + p.getRadius() + "\n");
 		}
 
 		Iterator<Fruit> Fit = fruits.iterator();
 		while(Fit.hasNext()) {
 			Fruit f = Fit.next();
-			sb.append("F" + "," + f.getId() + "," + f.getCoords().x() + "," + f.getCoords().y() + "," + f.getCoords().z() + ","
+			sb.append("F" + "," + f.getId() + "," + f.getCoords().y() + "," + f.getCoords().x() + "," + f.getCoords().z() + ","
 					+ f.getWeight() + "\n");
 		}
 		

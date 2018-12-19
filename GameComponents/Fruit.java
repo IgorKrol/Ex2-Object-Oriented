@@ -4,14 +4,14 @@ import Geom.Point3D;
 
 public class Fruit extends Figure {
 
-	private int weight;
+	private double weight;
 
-	public Fruit(Point3D p, int id, int w) {
+	public Fruit(Point3D p, int id, double w) {
 		super(p, id);
 		weight = w;
 	}
 
-	public int getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 
