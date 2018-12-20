@@ -16,6 +16,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Algo.ShortestPathAlgo;
+import File_format.Path2KML;
 import File_format.gameToCSVWriter;
 import GameComponents.Fruit;
 import GameComponents.Game;
@@ -26,14 +27,14 @@ import Geom.Point3D;
 import Resourses.Map;
 
 public class MyFrame extends JFrame implements MouseListener{
-
+	
+	private boolean shouldDrawFigures;
 	private Game mainGame;
 	private Map m;
 	private JPanel _panel;
 	private BufferedImage mapImage;
-	private int mapImageWidth, mapImageHeight;
 	private File mapFile;
-	private static Dimension d = new Dimension(400, 250);
+	private static Dimension d = new Dimension(1400, 600);
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
 	private JMenu AddMenu;
@@ -52,6 +53,7 @@ public class MyFrame extends JFrame implements MouseListener{
 	 */
 	public void initFrame() {
 		m = new Map();
+		shouldDrawFigures = false;
 		shouldDrawLines = false;
 		mainGame = new Game();
 		this.setPreferredSize(d);
@@ -59,8 +61,6 @@ public class MyFrame extends JFrame implements MouseListener{
 			//ImageINITIALIZER
 			mapFile = m.getFile();
 			mapImage = ImageIO.read(mapFile);
-			mapImageWidth = mapImage.getWidth();
-			mapImageHeight = mapImage.getHeight();
 		} 
 		catch (Exception e) {
 			System.err.println("ImageIO: Cant load image");
@@ -93,9 +93,26 @@ public class MyFrame extends JFrame implements MouseListener{
 	public void createFileMenu() {
 		JMenuItem open = new JMenuItem("Open File");
 		JMenuItem save = new JMenuItem("Save File");
-		//		JTextField jText1 = new JTextField();
+		JMenuItem saveKML = new JMenuItem("Save Path2KML");
+		//SAVEKML PLATFORM
+		saveKML.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser(new File("c"));
+				fc.setDialogTitle("Save your Game");
+				fc.setFileFilter(new FileNameExtensionFilter("kml", "KML"));
+				int value = fc.showSaveDialog(null);
+				File f = fc.getSelectedFile();
 
-
+				if(f != null) {
+					String filePath = f.getAbsolutePath();
+					Path2KML p2k = new Path2KML();
+					p2k.writePath2KML(mainGame.getPacmans(), filePath);
+				}
+			}
+		});
+		
 		//OPEN FILE PLATFORM
 		open.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {                                 
@@ -108,6 +125,7 @@ public class MyFrame extends JFrame implements MouseListener{
 					String fileName = f.getAbsolutePath();
 					mainGame = new Game(fileName);
 				}
+				shouldDrawFigures = true;
 			}
 
 		});
@@ -130,9 +148,9 @@ public class MyFrame extends JFrame implements MouseListener{
 
 			}
 		});
-		//////////////////////////////////////////////////////////////////////////////////////
 		fileMenu.add(open);
 		fileMenu.add(save);
+		fileMenu.add(saveKML);
 		menuBar.add(fileMenu);
 	}
 
@@ -217,15 +235,26 @@ public class MyFrame extends JFrame implements MouseListener{
 	 *
 	 */
 	public class JPanelBG extends JPanel{
+		int w;
+		int h;
 		@Override
 		public void paint(Graphics g) {
 			super.paintComponent(g);
-			int w = MyFrame.this.getWidth();
-			int h = MyFrame.this.getHeight();
+			w = MyFrame.this.getWidth();
+			h = MyFrame.this.getHeight();
 			frameSizePixels = new Point2D(w, h);
 
 			Image img = mapImage.getScaledInstance(w, h, Image.SCALE_SMOOTH);
 			g.drawImage(img, 0, 0, null);
+			
+			if(shouldDrawFigures) paintFigure(g);
+			if(shouldDrawLines) paintLines(g);
+			else {
+			repaint();
+			}
+			
+		}
+		public void paintFigure(Graphics g) {
 			Point2D frameSizePixels = new Point2D(w,h);
 			Iterator<Pacman> pacmanList = mainGame.getPacmans().iterator();
 			g.setColor(Color.YELLOW);
@@ -247,8 +276,6 @@ public class MyFrame extends JFrame implements MouseListener{
 			else {
 			repaint();
 			}
-			
-			
 			
 		}
 		public void paintLines(Graphics g) {
@@ -286,6 +313,9 @@ public class MyFrame extends JFrame implements MouseListener{
 	@Override
 	public void mousePressed(MouseEvent e) {
 		mouseClick = new Point2D(e.getX(), e.getY());
+		System.err.println(mouseClick);
+		System.err.println(m.PixelToCoords(mouseClick, frameSizePixels));
+		System.err.println(m.CoordsToPixel(m.PixelToCoords(mouseClick, frameSizePixels), frameSizePixels));
 		paintFigure();
 	}
 	@Override
@@ -310,6 +340,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		else {
 			mainGame.addFruit(mouseClick, frameSizePixels);
 		}
+		shouldDrawFigures = true;
 		_panel.repaint();
 
 		

@@ -41,20 +41,17 @@ public class Map{
 	public Point2D CoordsToPixel(Point3D coords, Point2D frameSizePixels) {
 		
 //		PIXELS TO MOVE
-		double difX = Math.abs(coords.x() - topLeftCorner.x());
-		double difY =  Math.abs(topLeftCorner.y() - coords.y());
+		double difX = coords.x() - topLeftCorner.x();
+		double difY =  topLeftCorner.y() - coords.y();
 		
 		//CORDINATES PER PIXEL
 		Point2D frameSize = topLeftCorner.difference(bottomRightCorner);
 		double pixelX = frameSize.x()/frameSizePixels.x();
 		double pixelY = frameSize.y()/frameSizePixels.y();
 		
-		
 		double xP =	difX/pixelX;
 		double yP = difY/pixelY;
 		return new Point2D(Math.round(xP), Math.round(yP));
-
-		
 	}
 	/**
 	 * Computes coords from pixel
@@ -72,7 +69,7 @@ public class Map{
 		double difY = Pixel.y()*pixelY;
 		//ADD TOP LEFT COORDS
 		double xValue = difX + topLeftCorner.x();
-		double yValue = difY + topLeftCorner.y();
+		double yValue = topLeftCorner.y() - difY;
 		Point3D returnCoords = new Point3D(xValue,yValue);
 		
 		return returnCoords;
