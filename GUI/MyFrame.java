@@ -248,6 +248,8 @@ public class MyFrame extends JFrame implements MouseListener{
 			repaint();
 			}
 			
+			
+			
 		}
 		public void paintLines(Graphics g) {
 			repaint();
@@ -273,6 +275,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		mainGameFrame.setSize(d);
 		mainGameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainGameFrame.setVisible(true);
+		
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -309,7 +312,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		}
 		_panel.repaint();
 
-
+		
 	}
 	///////////////////////////////////////////////////////////////////////////////////
 }
