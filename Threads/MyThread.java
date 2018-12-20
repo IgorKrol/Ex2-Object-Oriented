@@ -35,9 +35,12 @@ public class MyThread extends Thread {
 
 		while(itr.hasNext()) {
 			newP = itr.next();
+			Point3D vector = mc.vector3D(startPath, newP);
+			vector.setX(vector.x()/rotation);
+			vector.setY(vector.y()/rotation);
 			
 			for(int i = 0; i < rotation; i++) {
-				movePac(startPath, newP);
+				movePac(startPath, vector);
 				
 				try {
 					Thread.sleep(500);
@@ -50,11 +53,8 @@ public class MyThread extends Thread {
 		}
 	}
 	
-	private synchronized void movePac(Point3D startPoint, Point3D desPoint) {
+	private synchronized void movePac(Point3D startPoint, Point3D vector) {
 		
-		Point3D vector = mc.vector3D(startPoint, desPoint);
-		vector.setX(vector.x()/rotation);
-		vector.setY(vector.y()/rotation);
 		startPoint = mc.add(startPoint, vector);
 		
 	}
