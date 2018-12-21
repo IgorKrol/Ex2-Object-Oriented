@@ -10,6 +10,8 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import java.io.File;
+import java.net.PasswordAuthentication;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -333,7 +335,9 @@ public class MyFrame extends JFrame implements MouseListener{
 
 
 	}
-
+	public Point2D FrameSize() {
+		return frameSizePixels;
+	}
 	public void paintFigure () {
 		if(shouldPaintPacman) 
 			mainGame.addPacman(mouseClick, frameSizePixels);

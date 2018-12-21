@@ -61,6 +61,10 @@ public class Path {
 		time+=t;
 	}
 	
+	public double getTime(int index) {
+		return timePerFruitEatten.get(index);
+	}
+	
 	public double getTime() {
 		return time;
 	}
