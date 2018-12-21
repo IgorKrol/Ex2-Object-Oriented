@@ -27,11 +27,13 @@ import GameComponents.Path;
 import Geom.Point2D;
 import Geom.Point3D;
 import Resourses.Map;
+import Threads.AnimationThread;
 
 public class MyFrame extends JFrame implements MouseListener{
-	
+
 	private boolean shouldDrawFigures;
 	private Game mainGame;
+	private Game gameStash;
 	private Map m;
 	private JPanel _panel;
 	private BufferedImage mapImage;
@@ -58,6 +60,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		shouldDrawFigures = false;
 		shouldDrawLines = false;
 		mainGame = new Game();
+		gameStash = mainGame;
 		this.setPreferredSize(d);
 		try {
 			//ImageINITIALIZER
@@ -98,7 +101,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		JMenuItem saveKML = new JMenuItem("Save Path2KML");
 		//SAVEKML PLATFORM
 		saveKML.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser(new File("c"));
@@ -114,7 +117,7 @@ public class MyFrame extends JFrame implements MouseListener{
 				}
 			}
 		});
-		
+
 		//OPEN FILE PLATFORM
 		open.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {                                 
@@ -197,26 +200,27 @@ public class MyFrame extends JFrame implements MouseListener{
 
 			}
 		});
-		
-		
+
+
 		playGame.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				AnimationThread at = new AnimationThread(mainGame.getPacmans(), (JPanelBG)_panel);
+				at.start();
+
 			}
 		});
-		
+
 		reset.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainGame = new Game();
 			}
 		});
-		
-		
+
+
 		AlgoMenu.add(findShortPath);
 		AlgoMenu.add(playGame);
 		AlgoMenu.add(reset);
@@ -237,10 +241,13 @@ public class MyFrame extends JFrame implements MouseListener{
 	 *
 	 */
 	public class JPanelBG extends JPanel{
+		boolean shouldRepaint = true;
+		Graphics gPanel;
 		int w;
 		int h;
 		@Override
 		public void paint(Graphics g) {
+			gPanel = g;
 			super.paintComponent(g);
 			w = MyFrame.this.getWidth();
 			h = MyFrame.this.getHeight();
@@ -248,14 +255,14 @@ public class MyFrame extends JFrame implements MouseListener{
 
 			Image img = mapImage.getScaledInstance(w, h, Image.SCALE_SMOOTH);
 			g.drawImage(img, 0, 0, null);
-			
+
 			if(shouldDrawFigures) paintFigure(g);
 			if(shouldDrawLines) paintLines(g);
-			else {
-			repaint();
-			}
-			
+			if(shouldRepaint) repaint();
+
 		}
+
+
 		public void paintFigure(Graphics g) {
 			Point2D frameSizePixels = new Point2D(w,h);
 			Iterator<Pacman> pacmanList = mainGame.getPacmans().iterator();
@@ -276,9 +283,9 @@ public class MyFrame extends JFrame implements MouseListener{
 			}
 			if(shouldDrawLines) paintLines(g);
 			else {
-			repaint();
+				repaint();
 			}
-			
+
 		}
 		public void paintLines(Graphics g) {
 			repaint();
@@ -304,7 +311,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		mainGameFrame.setSize(d);
 		mainGameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainGameFrame.setVisible(true);
-		
+
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -347,7 +354,7 @@ public class MyFrame extends JFrame implements MouseListener{
 		shouldDrawFigures = true;
 		_panel.repaint();
 
-		
+
 	}
 	///////////////////////////////////////////////////////////////////////////////////
 }

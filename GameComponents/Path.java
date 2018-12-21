@@ -60,7 +60,18 @@ public class Path {
 	public void addTime(double t) {
 		time+=t;
 	}
-	
+	/**
+	 * removes point from path
+	 * @param index
+	 */
+	public void removeP(int index) {
+		pacManPath.remove(index);
+	}
+	/**
+	 * returns time with index
+	 * @param index
+	 * @return
+	 */
 	public double getTime(int index) {
 		return timePerFruitEatten.get(index);
 	}
@@ -68,7 +79,10 @@ public class Path {
 	public double getTime() {
 		return time;
 	}
-	
+	/**
+	 * adds point to path + saves time.
+	 * @param point
+	 */
 	public void add(Point3D point) {
 		pacManPath.add(point);
 		timePerFruitEatten.add(time);

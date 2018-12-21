@@ -32,6 +32,9 @@ public class Pacman extends Figure{
 		path = new Path();
 		path.add(p);
 	}
+	public void setCoords(Point3D p) {
+		super.setCoords(p);
+	}
 	
 	public Path getPath() {
 		return path;
