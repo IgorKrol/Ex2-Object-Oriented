@@ -1,6 +1,7 @@
 package Threads;
 
 import java.awt.Graphics;
+import java.awt.GraphicsDevice;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,6 +11,7 @@ import javax.swing.JFrame;
 import Coords.MyCoords;
 import GUI.MyFrame;
 import GUI.MyFrame.JPanelBG;
+import GameComponents.Fruit;
 import GameComponents.Pacman;
 import GameComponents.Path;
 import Geom.Point2D;
@@ -18,15 +20,17 @@ import Geom.Point3D;
 public class AnimationThread extends Thread {
 	boolean notDone = true;
 	List<Pacman> pacmans;
+	List<Fruit> fruits;
 	JPanelBG bg;
 	/**
-	 * this function moves all points single tic.
-	 * each point moves fruction of distance to next point.
+	 * this function moves all points single tick.
+	 * each point moves fraction of distance to next point.
 	 */
 	private void movePoints() {
 		int counter=0;
 		Iterator<Pacman> pi = pacmans.iterator();
 		MyCoords mc = new MyCoords();
+		Point2D eaten;
 		//move all points
 		while (pi.hasNext()) {
 			Pacman p = pi.next();
@@ -58,21 +62,39 @@ public class AnimationThread extends Thread {
 						p.getCoords().x() >= path.get(1).x() && left ||
 						p.getCoords().y() <= path.get(1).y() && up ||
 						p.getCoords().y() >= path.get(1).y() && !up) {
+					isFruitEaten(x, y);
 					p.getPath().removeP(0);
 				}
 			}
+			
 			//if all paths left with single point, end thread.
 			else counter++;
 			if (counter == pacmans.size()) notDone = false;
 		}
 	}
+	
+	// CHECKS IF FRUIT IS EATEN IN ORDER TO PAINT ON IT WITH X LATER
+	private void isFruitEaten(double x, double y) {
+		Iterator<Fruit> itF = fruits.iterator();
+		while(itF.hasNext()) {
+			Fruit f = itF.next();
+			if(Math.abs((f.getCoords().x()- x))<0.01 
+					&& Math.abs((f.getCoords().y()- y))<0.01 
+					&& f.isEaten() == false) {
+				f.setEaten(true);
+				break;
+			}
+		}
+	}
+	
 	/**
 	 * init
 	 * @param pacs = pacmans list
 	 * @param bg = graphics
 	 */
-	public AnimationThread(List<Pacman> pacs, JPanelBG bg) {
+	public AnimationThread(List<Pacman> pacs, List<Fruit> fruits, JPanelBG bg) {
 		pacmans = pacs;
+		this.fruits = fruits;
 		this.bg = bg;
 
 	}

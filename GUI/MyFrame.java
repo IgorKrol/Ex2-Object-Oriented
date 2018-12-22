@@ -206,7 +206,7 @@ public class MyFrame extends JFrame implements MouseListener{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AnimationThread at = new AnimationThread(mainGame.getPacmans(), (JPanelBG)_panel);
+				AnimationThread at = new AnimationThread(mainGame.getPacmans(), mainGame.getFruits(), (JPanelBG)_panel);
 				at.start();
 
 			}
@@ -280,6 +280,13 @@ public class MyFrame extends JFrame implements MouseListener{
 				Fruit fruit = fruitList.next();
 				Point2D fruPixels = m.CoordsToPixel(fruit.getCoords(), frameSizePixels);
 				g.fillOval((int)fruPixels.x()-7, (int)fruPixels.y()-7, 14, 14);
+				if(fruit.isEaten())
+				{
+					g.setColor(Color.BLACK);
+					g.drawLine((int)fruPixels.x()+8, (int)fruPixels.y()+8, (int)fruPixels.x()-8, (int)fruPixels.y()-8);
+					g.drawLine((int)fruPixels.x()-8, (int)fruPixels.y()+8, (int)fruPixels.x()+8, (int)fruPixels.y()-8);
+					g.setColor(Color.RED);
+				}
 			}
 			if(shouldDrawLines) paintLines(g);
 			else {

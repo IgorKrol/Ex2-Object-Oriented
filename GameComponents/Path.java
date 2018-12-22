@@ -37,7 +37,7 @@ public class Path {
 		return newPath;
 	}
 	/**
-	 * Calculates path's distance thru all points.
+	 * Calculates path's distance through all points.
 	 * @return double distance
 	 */
 	public double distance() {

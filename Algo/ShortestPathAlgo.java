@@ -28,8 +28,6 @@ public class ShortestPathAlgo {
 		this.game = g;
 		PathBoard = new double[g.getPacmans().size()][g.getFruits().size()];
 		
-		
-		
 		Iterator<Pacman> pacIterator = g.getPacmans().iterator();
 		for(int pi = 0; pacIterator.hasNext(); pi++) {
 			Pacman pac = pacIterator.next();
