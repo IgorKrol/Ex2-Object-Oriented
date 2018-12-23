@@ -39,41 +39,54 @@ public class AnimationThread extends Thread {
 			Point3D vec;	//vector
 			int rot;	//rotations
 			boolean left,up;	//is point left?up?
-//			System.out.println(path.size());
+			//			System.out.println(path.size());
 			if(path.size()>1) {
 				//calc points distance and vector
 				dis = mc.distance3d(path.get(0),path.get(1));
-				vec = mc.vector3D(path.get(0),path.get(1));
-				//rotations between points should be distance/speed (which gives time)
-				rot = (int)(dis/10/p.getSpeed());
-				double x,y;
-				//is p left/up to next point?
-				left = (p.getCoords().x() <= path.get(1).x())? true: false;
-				up = (p.getCoords().y() >= path.get(1).y())? true: false;
-				
-				//USELESS CODE: just reduce vector/rotations from point coords. 
-				x = left? p.getCoords().x() - (vec.x()/rot) : p.getCoords().x() - (vec.x()/rot);
-				y = up? p.getCoords().y() - (vec.y()/rot) : p.getCoords().y() - (vec.y()/rot);
-//				System.out.println(x + ", " + y);
-				//set cords for p
-				p.setCoords(new Point3D(x,y));
-				//if p passed next point, remove first point in path.
-				if (p.getCoords().x() <= path.get(1).x() && !left ||
-						p.getCoords().x() >= path.get(1).x() && left ||
-						p.getCoords().y() <= path.get(1).y() && up ||
-						p.getCoords().y() >= path.get(1).y() && !up) {
+				if (dis == 0) {
 					p.getPath().removeP(0);
 					p.setCoords(new Point3D(p.getPath().getPathPoints().get(0)));
 					isFruitEaten(p.getCoords().x(), p.getCoords().y());
 				}
+				else {
+					vec = mc.vector3D(path.get(0),path.get(1));
+					//rotations between points should be distance/speed (which gives time)
+					rot = (int)(dis/10/p.getSpeed());
+					double x,y;
+					//is p left/up to next point?
+					left = (p.getCoords().x() <= path.get(1).x())? true: false;
+					up = (p.getCoords().y() >= path.get(1).y())? true: false;
+
+					//USELESS CODE: just reduce vector/rotations from point coords. 
+					x = left? p.getCoords().x() - (vec.x()/rot) : p.getCoords().x() - (vec.x()/rot);
+					y = up? p.getCoords().y() - (vec.y()/rot) : p.getCoords().y() - (vec.y()/rot);
+
+					//				System.out.println(p.getCoords().x() + ", " + p.getCoords().y());
+					//				System.out.println(x + ", " + y);
+					//set cords for p
+					p.setCoords(new Point3D(x,y));
+					//if p passed next point, remove first point in path.
+					if (p.getCoords().x() <= path.get(1).x() && !left ||
+							p.getCoords().x() >= path.get(1).x() && left ||
+							p.getCoords().y() <= path.get(1).y() && up ||
+							p.getCoords().y() >= path.get(1).y() && !up) {
+						p.getPath().removeP(0);
+						p.setCoords(new Point3D(p.getPath().getPathPoints().get(0)));
+						isFruitEaten(p.getCoords().x(), p.getCoords().y());
+					}
+				}
 			}
-			
+
 			//if all paths left with single point, end thread.
 			else counter++;
 			if (counter == pacmans.size()) notDone = false;
 		}
 	}
-	
+	/**
+	 * this function checks which fruit has been eaten
+	 * @param x = Coords.x
+	 * @param y = Coords.y
+	 */
 	// CHECKS IF FRUIT IS EATEN IN ORDER TO PAINT ON IT WITH X LATER
 	private void isFruitEaten(double x, double y) {
 		Iterator<Fruit> itF = fruits.iterator();
@@ -87,7 +100,7 @@ public class AnimationThread extends Thread {
 			}
 		}
 	}
-	
+
 	/**
 	 * init
 	 * @param pacs = pacmans list
@@ -103,7 +116,7 @@ public class AnimationThread extends Thread {
 	public void run(){
 		while(notDone) {
 			try {
-				sleep(3);
+				sleep(2);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
