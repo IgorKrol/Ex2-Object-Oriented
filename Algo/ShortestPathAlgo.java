@@ -37,7 +37,11 @@ public class ShortestPathAlgo {
 				PathBoard[pi][fi]= timePacmanToFruit(pac, fru);
 			}
 		}//END PATHBOARD CREATION
-		
+		//CHECK
+//		for(int i = 0; i < PathBoard.length; i++) {
+//			for(int j = 0; j < PathBoard[0].length; j++)
+//				System.out.print((int)PathBoard[i][j] + ", ");
+//			System.out.println();}
 		
 		for(int i = 0; i < PathBoard[0].length; i++) {
 			int[] minIndex = MatrixMin(PathBoard);
@@ -83,7 +87,7 @@ public class ShortestPathAlgo {
 		int[] index = new int[2];
 		for(i=0; i<mat.length; i++) {
 			for (j=0; j<mat[0].length; j++) {
-				if (min > mat[i][j] && mat[i][j] != 0) {
+				if (min > mat[i][j] && mat[i][j] >= 0) {
 					min = mat[i][j];
 					index[0] = i;
 					index[1] = j;
@@ -117,7 +121,7 @@ public class ShortestPathAlgo {
 		for(int fi = 0; fi < PathBoard[0].length; fi++) {
 			Pacman c;
 			Fruit ff = eFru.next();
-			if (PathBoard[index[0]][fi] != 0) {
+			if (PathBoard[index[0]][fi] >= 0) {
 				PathBoard[index[0]][fi]= timePacmanToFruit(ePac, ff) + time;
 			}
 		}
@@ -138,7 +142,7 @@ public class ShortestPathAlgo {
 //		}
 		//Removing fruit from board by nullifying value.
 		for (int fi = 0; fi<PathBoard.length; fi++) {
-			PathBoard[fi][index[1]]=0;
+			PathBoard[fi][index[1]]=-2;
 		}
 
 	}

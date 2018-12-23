@@ -62,8 +62,9 @@ public class AnimationThread extends Thread {
 						p.getCoords().x() >= path.get(1).x() && left ||
 						p.getCoords().y() <= path.get(1).y() && up ||
 						p.getCoords().y() >= path.get(1).y() && !up) {
-					isFruitEaten(x, y);
 					p.getPath().removeP(0);
+					p.setCoords(new Point3D(p.getPath().getPathPoints().get(0)));
+					isFruitEaten(p.getCoords().x(), p.getCoords().y());
 				}
 			}
 			
@@ -78,8 +79,8 @@ public class AnimationThread extends Thread {
 		Iterator<Fruit> itF = fruits.iterator();
 		while(itF.hasNext()) {
 			Fruit f = itF.next();
-			if(Math.abs((f.getCoords().x()- x))<0.01 
-					&& Math.abs((f.getCoords().y()- y))<0.01 
+			if(Math.abs((f.getCoords().x()- x))<0.000001 
+					&& Math.abs((f.getCoords().y()- y))<0.000001 
 					&& f.isEaten() == false) {
 				f.setEaten(true);
 				break;

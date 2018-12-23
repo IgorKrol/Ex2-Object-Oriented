@@ -1,11 +1,13 @@
 package Threads;
 
 import java.util.Iterator;
+import java.util.List;
 
 import Algo.ShortestPathAlgo;
 import Coords.MyCoords;
 import GUI.MyFrame;
 import GameComponents.Game;
+import GameComponents.Pacman;
 import GameComponents.Path;
 import Geom.Point3D;
 import Resourses.Map;
@@ -17,6 +19,7 @@ public class MyThread extends Thread {
 	private ShortestPathAlgo spa;
 	private MyCoords mc = new MyCoords();
 
+	
 	public MyThread(String Name, Game g, ShortestPathAlgo spa) {
 		super(Name);
 		myGame = myGame.Copy(g);
@@ -28,8 +31,8 @@ public class MyThread extends Thread {
 	public void run() {
 	//	Point3D startPath;
 	//	startPath should be a point of the first pacman who needs to move	
-		
-		Iterator<Point3D> itr = p.iterator();				// iterator for path some path chosen
+		List<Pacman> p = myGame.getPacmans();
+		Iterator<Pacman> itr = p.iterator();				// iterator for path some path chosen
 		Point3D newP;
 //		spa.getGameWithPaths();						// need to use spa class to transform the calcs to live actions
 
